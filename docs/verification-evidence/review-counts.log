@@ -1,0 +1,23 @@
+FULL SUITE {'tests': 87, 'failures': 0, 'errors': 0, 'skipped': 0}
+REVIEW TOTAL {'tests': 21, 'failures': 0, 'errors': 0, 'skipped': 0}
+com.tamalitos.malitos.BackupTest {'tests': '4', 'failures': '0', 'errors': '0', 'skipped': '0'}
+com.tamalitos.malitos.BusinessRulesTest {'tests': '2', 'failures': '0', 'errors': '0', 'skipped': '0'}
+com.tamalitos.malitos.BusinessStoreTest {'tests': '12', 'failures': '0', 'errors': '0', 'skipped': '0'}
+com.tamalitos.malitos.DataModelsTest {'tests': '4', 'failures': '0', 'errors': '0', 'skipped': '0'}
+com.tamalitos.malitos.DriveApiTest {'tests': '7', 'failures': '0', 'errors': '0', 'skipped': '0'}
+com.tamalitos.malitos.DriveBackgroundTest {'tests': '3', 'failures': '0', 'errors': '0', 'skipped': '0'}
+com.tamalitos.malitos.DriveControllerTest {'tests': '4', 'failures': '0', 'errors': '0', 'skipped': '0'}
+com.tamalitos.malitos.DriveHttpsTransportTest {'tests': '1', 'failures': '0', 'errors': '0', 'skipped': '0'}
+com.tamalitos.malitos.DriveSnapshotTest {'tests': '2', 'failures': '0', 'errors': '0', 'skipped': '0'}
+com.tamalitos.malitos.DriveStateTest {'tests': '3', 'failures': '0', 'errors': '0', 'skipped': '0'}
+com.tamalitos.malitos.ReviewDriveResetTest {'tests': '2', 'failures': '0', 'errors': '0', 'skipped': '0'}
+com.tamalitos.malitos.ReviewEditorTest {'tests': '4', 'failures': '0', 'errors': '0', 'skipped': '0'}
+com.tamalitos.malitos.ReviewGenerationTest {'tests': '6', 'failures': '0', 'errors': '0', 'skipped': '0'}
+com.tamalitos.malitos.ReviewIdLimitTest {'tests': '4', 'failures': '0', 'errors': '0', 'skipped': '0'}
+com.tamalitos.malitos.ReviewReplacementTest {'tests': '3', 'failures': '0', 'errors': '0', 'skipped': '0'}
+com.tamalitos.malitos.ReviewSafetyRecoveryTest {'tests': '2', 'failures': '0', 'errors': '0', 'skipped': '0'}
+com.tamalitos.malitos.UiActivityTest {'tests': '8', 'failures': '0', 'errors': '0', 'skipped': '0'}
+com.tamalitos.malitos.UiBackupFilesTest {'tests': '5', 'failures': '0', 'errors': '0', 'skipped': '0'}
+com.tamalitos.malitos.UiPeriodTest {'tests': '4', 'failures': '0', 'errors': '0', 'skipped': '0'}
+com.tamalitos.malitos.UiWorkflowTest {'tests': '7', 'failures': '0', 'errors': '0', 'skipped': '0'}
+SUPPORTED ID CEILING 9223372036853775807

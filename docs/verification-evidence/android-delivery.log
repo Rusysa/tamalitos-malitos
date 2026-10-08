@@ -1,0 +1,52 @@
+INSTRUMENTATION_STATUS: class=com.tamalitos.malitos.BusinessFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=
+com.tamalitos.malitos.BusinessFlowInstrumentedTest:
+INSTRUMENTATION_STATUS: test=customerHalfPaymentInstallmentExpenseAndReopenPersistCorrectly
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.tamalitos.malitos.BusinessFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=customerHalfPaymentInstallmentExpenseAndReopenPersistCorrectly
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.tamalitos.malitos.BusinessFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=unpaidOrderRemainsDebtAfterDelivery
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.tamalitos.malitos.BusinessFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=unpaidOrderRemainsDebtAfterDelivery
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.tamalitos.malitos.NativeWorkflowInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=
+com.tamalitos.malitos.NativeWorkflowInstrumentedTest:
+INSTRUMENTATION_STATUS: test=registerCustomerOrderHalfThenLiquidateAndRegisterExpenseThroughScreens
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.tamalitos.malitos.NativeWorkflowInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=registerCustomerOrderHalfThenLiquidateAndRegisterExpenseThroughScreens
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 18.11
+
+OK (3 tests)
+
+
+INSTRUMENTATION_CODE: -1

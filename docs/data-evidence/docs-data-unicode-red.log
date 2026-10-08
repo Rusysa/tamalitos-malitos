@@ -1,0 +1,13 @@
+JUnit version 4.13.2
+....E......
+Time: 6.539
+There was 1 failure:
+1) malformedUnicodeIsRejectedBeforeItCanBeLostInUtf8Backup(com.tamalitos.malitos.BusinessStoreTest)
+java.lang.AssertionError: Expected validation rejection
+	at org.junit.Assert.fail(Assert.java:89)
+	at com.tamalitos.malitos.BusinessStoreTest.rejected(BusinessStoreTest.kt:25)
+	at com.tamalitos.malitos.BusinessStoreTest.malformedUnicodeIsRejectedBeforeItCanBeLostInUtf8Backup(BusinessStoreTest.kt:29)
+
+FAILURES!!!
+Tests run: 10,  Failures: 1
+

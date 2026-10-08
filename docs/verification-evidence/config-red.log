@@ -1,0 +1,25 @@
+test_modern_cloud_and_device_transfer_exclude_business_storage (__main__.ConfigurationSafetyTests.test_modern_cloud_and_device_transfer_exclude_business_storage) ... FAIL
+test_platform_backup_disabled_and_modern_rules_declared (__main__.ConfigurationSafetyTests.test_platform_backup_disabled_and_modern_rules_declared) ... FAIL
+
+======================================================================
+FAIL: test_modern_cloud_and_device_transfer_exclude_business_storage (__main__.ConfigurationSafetyTests.test_modern_cloud_and_device_transfer_exclude_business_storage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/rudys/proyectos/App gestion kt/tools/test_config_safety.py", line 19, in test_modern_cloud_and_device_transfer_exclude_business_storage
+    self.assertTrue(path.exists(), 'Android12+ extraction rules are missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : Android12+ extraction rules are missing
+
+======================================================================
+FAIL: test_platform_backup_disabled_and_modern_rules_declared (__main__.ConfigurationSafetyTests.test_platform_backup_disabled_and_modern_rules_declared)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/rudys/proyectos/App gestion kt/tools/test_config_safety.py", line 14, in test_platform_backup_disabled_and_modern_rules_declared
+    self.assertEqual(app.get(ANDROID+'dataExtractionRules'), '@xml/data_extraction_rules')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != '@xml/data_extraction_rules'
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+FAILED (failures=2)

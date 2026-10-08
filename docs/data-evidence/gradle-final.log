@@ -1,0 +1,107 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.11.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :app:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+
+> Task :app:compileDebugKotlin
+w: file:///home/rudys/proyectos/App%20gestion%20kt/app/src/main/java/com/tamalitos/malitos/MainActivity.kt:103:20 'fun onBackPressed(): Unit' is deprecated. Deprecated in Java.
+
+> Task :app:javaPreCompileDebug
+> Task :app:compileDebugJavaWithJavac NO-SOURCE
+> Task :app:bundleDebugClassesToRuntimeJar
+> Task :app:bundleDebugClassesToCompileJar
+
+> Task :app:compileDebugUnitTestKotlin
+w: file:///home/rudys/proyectos/App%20gestion%20kt/app/src/test/java/com/tamalitos/malitos/UiActivityTest.kt:89:45 'fun <T : Parcelable!> getParcelableArrayList(p0: String?): ArrayList<T!>?' is deprecated. Deprecated in Java.
+
+> Task :app:preDebugUnitTestBuild UP-TO-DATE
+> Task :app:javaPreCompileDebugUnitTest
+> Task :app:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :app:mergeDebugShaders
+> Task :app:compileDebugShaders NO-SOURCE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :app:mergeDebugAssets
+> Task :app:packageDebugUnitTestForUnitTest
+> Task :app:generateDebugUnitTestConfig
+> Task :app:processDebugJavaRes
+> Task :app:processDebugUnitTestJavaRes
+
+> Task :app:testDebugUnitTest
+
+BackupTest > versionedSnapshotRoundTripPreservesIdsRelationshipsAndReservedStock FAILED
+    java.lang.IllegalStateException at WorkManagerImpl.java:170
+
+BackupTest > invalidBackupsLeaveExistingDataUnchanged FAILED
+    java.lang.IllegalStateException at WorkManagerImpl.java:170
+
+BackupTest > emptyVersionedBackupIsAValidExplicitReplacement FAILED
+    java.lang.IllegalStateException at WorkManagerImpl.java:170
+
+BackupTest > restoreRollsBackOnSqliteFailureAfterDelete FAILED
+    java.lang.IllegalStateException at WorkManagerImpl.java:170
+
+BusinessStoreTest > orderCreationReservesStockAndSnapshotsCustomerAndPrices FAILED
+    java.lang.IllegalStateException at WorkManagerImpl.java:170
+
+BusinessStoreTest > cancellationRestoresStockOnceAndIsFinal FAILED
+    java.lang.IllegalStateException at WorkManagerImpl.java:170
+
+BusinessStoreTest > customerDirectoryPersistsEditsAndSearchesLiteralText FAILED
+    java.lang.IllegalStateException at WorkManagerImpl.java:170
+
+BusinessStoreTest > malformedUnicodeIsRejectedBeforeItCanBeLostInUtf8Backup FAILED
+    java.lang.IllegalStateException at WorkManagerImpl.java:170
+
+BusinessStoreTest > expensesPersistEditDeleteAndValidateDateRanges FAILED
+    java.lang.IllegalStateException at WorkManagerImpl.java:170
+
+BusinessStoreTest > cancellationStockOverflowRollsBackEverything FAILED
+    java.lang.IllegalStateException at WorkManagerImpl.java:170
+
+BusinessStoreTest > separateStoreInstancesNeverUseAStalePaymentBalance FAILED
+    java.lang.IllegalStateException at WorkManagerImpl.java:170
+
+BusinessStoreTest > reportsUseDeliveryPaymentAndExpenseDatesIndependently FAILED
+    java.lang.IllegalStateException at WorkManagerImpl.java:170
+
+BusinessStoreTest > paymentInsertFailureRollsBackOrderAndStockReservation FAILED
+    java.lang.IllegalStateException at WorkManagerImpl.java:170
+
+BusinessStoreTest > productCatalogSupportsOptionalStockAndInactiveItems FAILED
+    java.lang.IllegalStateException at WorkManagerImpl.java:170
+
+BusinessStoreTest > laterPaymentsCannotOverpayAndDeliveryMayHaveDebt FAILED
+    java.lang.IllegalStateException at WorkManagerImpl.java:170
+
+BusinessStoreTest > invalidOrdersNeverDecrementStockOrLeaveRows FAILED
+    java.lang.IllegalStateException at WorkManagerImpl.java:170
+
+21 tests completed, 16 failed
+
+> Task :app:testDebugUnitTest FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:testDebugUnitTest'.
+> There were failing tests. See the report at: file:///home/rudys/proyectos/App%20gestion%20kt/app/build/reports/tests/testDebugUnitTest/index.html
+
+* Try:
+> Run with --scan to get full insights.
+
+BUILD FAILED in 1m 26s
+26 actionable tasks: 13 executed, 13 up-to-date

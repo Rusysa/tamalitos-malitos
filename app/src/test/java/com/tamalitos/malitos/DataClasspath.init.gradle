@@ -1,0 +1,14 @@
+// Optional isolated DATA test classpath resolver. Invoked with --init-script only.
+// Does not edit Android/Gradle project configuration or compile parallel workers.
+gradle.projectsEvaluated {
+    def app = gradle.rootProject.project(':app')
+    gradle.rootProject.tasks.register('dataRuntimeClasspath') {
+        doLast {
+            def entries = app.configurations.getByName('debugUnitTestRuntimeClasspath').resolve()
+            def out = new File(app.rootProject.buildDir, 'data-runtime-classpath.txt')
+            out.parentFile.mkdirs()
+            out.text = entries.collect { it.absolutePath }.join(File.pathSeparator)
+            println "Resolved ${entries.size()} actual test runtime artifacts to ${out}"
+        }
+    }
+}

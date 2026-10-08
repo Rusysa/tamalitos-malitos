@@ -1,0 +1,26 @@
+/.gradle/
+/.kotlin/
+/tools/__pycache__/
+/entregables/
+/build/
+/app/build/
+/local.properties
+/.idea/
+*.iml
+*.jks
+*.keystore
+/tools/env.sh
+/verification/*.xml
+
+# Credenciales y datos locales: nunca publicar en el repositorio.
+.env
+.env.*
+*.pem
+*.key
+credentials*.json
+service-account*.json
+client_secret*.json
+*.db
+*.db-shm
+*.db-wal
+*.sqlite

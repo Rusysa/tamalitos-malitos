@@ -1,0 +1,7 @@
+{
+  "nativeSafExportImportReexport": "passed",
+  "exactBusinessSnapshotMatch": true,
+  "customers": 6,
+  "orders": 5,
+  "expenses": 3
+}

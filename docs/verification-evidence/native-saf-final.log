@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "flow": "Native DocumentsUI export -> confirmed import -> export",
+  "exactBusinessSnapshotMatch": true,
+  "android": "8.1.0",
+  "customers": 9,
+  "orders": 8,
+  "expenses": 5,
+  "firstFile": "/sdcard/Download/tamalitos-2026-10-07.json (2)",
+  "secondFile": "/sdcard/Download/tamalitos-2026-10-07.json (3)",
+  "restoreStatus": "Restauración completada. Copia previa guardada: seguridad-1791397324872-0540a803-ae47-4cba-a167-7760089f6ea5.json."
+}
+/home/rudys/.hermes/cache/scratch/tamalitos-native-qa/respaldo-final-verificado.png

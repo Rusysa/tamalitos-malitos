@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.tamalitos.malitos.DataModelsTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-07T17:04:00" hostname="rudysfedora" time="0.085">
+  <properties/>
+  <testcase name="subtractionOverflowIsRejectedInsteadOfWrapping" classname="com.tamalitos.malitos.DataModelsTest" time="0.052"/>
+  <testcase name="totalsBalancesAndLabelsAreDerivedFromCents" classname="com.tamalitos.malitos.DataModelsTest" time="0.002"/>
+  <testcase name="overflowIsNotSilentlyWrapped" classname="com.tamalitos.malitos.DataModelsTest" time="0.001"/>
+  <testcase name="invalidOrderItemCannotProducePlausibleMoney" classname="com.tamalitos.malitos.DataModelsTest" time="0.029"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

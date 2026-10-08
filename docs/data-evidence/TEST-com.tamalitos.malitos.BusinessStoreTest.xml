@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.tamalitos.malitos.BusinessStoreTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-10-07T17:04:13" hostname="rudysfedora" time="1.192">
+  <properties/>
+  <testcase name="orderCreationReservesStockAndSnapshotsCustomerAndPrices" classname="com.tamalitos.malitos.BusinessStoreTest" time="0.15"/>
+  <testcase name="cancellationRestoresStockOnceAndIsFinal" classname="com.tamalitos.malitos.BusinessStoreTest" time="0.106"/>
+  <testcase name="customerDirectoryPersistsEditsAndSearchesLiteralText" classname="com.tamalitos.malitos.BusinessStoreTest" time="0.088"/>
+  <testcase name="malformedUnicodeIsRejectedBeforeItCanBeLostInUtf8Backup" classname="com.tamalitos.malitos.BusinessStoreTest" time="0.085"/>
+  <testcase name="expensesPersistEditDeleteAndValidateDateRanges" classname="com.tamalitos.malitos.BusinessStoreTest" time="0.081"/>
+  <testcase name="cancellationStockOverflowRollsBackEverything" classname="com.tamalitos.malitos.BusinessStoreTest" time="0.08"/>
+  <testcase name="separateStoreInstancesNeverUseAStalePaymentBalance" classname="com.tamalitos.malitos.BusinessStoreTest" time="0.091"/>
+  <testcase name="reportsUseDeliveryPaymentAndExpenseDatesIndependently" classname="com.tamalitos.malitos.BusinessStoreTest" time="0.117"/>
+  <testcase name="paymentInsertFailureRollsBackOrderAndStockReservation" classname="com.tamalitos.malitos.BusinessStoreTest" time="0.076"/>
+  <testcase name="productCatalogSupportsOptionalStockAndInactiveItems" classname="com.tamalitos.malitos.BusinessStoreTest" time="0.088"/>
+  <testcase name="laterPaymentsCannotOverpayAndDeliveryMayHaveDebt" classname="com.tamalitos.malitos.BusinessStoreTest" time="0.107"/>
+  <testcase name="invalidOrdersNeverDecrementStockOrLeaveRows" classname="com.tamalitos.malitos.BusinessStoreTest" time="0.117"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

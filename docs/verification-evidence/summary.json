@@ -1,0 +1,177 @@
+{
+  "jvm": {
+    "tests": 92,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "suites": [
+    {
+      "name": "com.tamalitos.malitos.BackupTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.tamalitos.malitos.BoundaryAllocationTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.tamalitos.malitos.BusinessRulesTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.tamalitos.malitos.BusinessStoreTest",
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.tamalitos.malitos.DataModelsTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.tamalitos.malitos.DriveApiTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.tamalitos.malitos.DriveBackgroundTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.tamalitos.malitos.DriveControllerTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.tamalitos.malitos.DriveHttpsTransportTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.tamalitos.malitos.DriveSnapshotTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.tamalitos.malitos.DriveStateTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.tamalitos.malitos.ReviewDriveResetTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.tamalitos.malitos.ReviewEditorTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.tamalitos.malitos.ReviewGenerationTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.tamalitos.malitos.ReviewIdLimitTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.tamalitos.malitos.ReviewReplacementTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.tamalitos.malitos.ReviewSafetyRecoveryTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.tamalitos.malitos.UiActivityTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.tamalitos.malitos.UiBackupFilesTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.tamalitos.malitos.UiPeriodTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.tamalitos.malitos.UiWorkflowTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "lint": {
+    "Error": 0,
+    "Fatal": 0,
+    "Warning": 32,
+    "Information": 0
+  },
+  "androidInstrumented": {
+    "tests": 3,
+    "failures": 0,
+    "log": "/home/rudys/proyectos/App gestion kt/docs/verification-evidence/android-delivery.log"
+  },
+  "apk": {
+    "path": "/home/rudys/proyectos/App gestion kt/app/build/outputs/apk/debug/app-debug.apk",
+    "bytes": 3739207,
+    "sha256": "b7ecc345ef017407bb5882d5b28cd17637eb55de3101419f895d64388a2e350c"
+  },
+  "wordUnmodified": true,
+  "wordSha256": "f6573f20095bc58f485ad26ffaf09d73e0bf5ef0afdf02ba3d5ec5b04f1e70d9",
+  "googleDriveLiveTested": false,
+  "googleDrivePending": "Google Cloud and authorized account setup"
+}

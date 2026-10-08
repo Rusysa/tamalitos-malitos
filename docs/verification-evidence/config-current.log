@@ -1,0 +1,7 @@
+test_modern_cloud_and_device_transfer_exclude_business_storage (__main__.ConfigurationSafetyTests.test_modern_cloud_and_device_transfer_exclude_business_storage) ... ok
+test_platform_backup_disabled_and_modern_rules_declared (__main__.ConfigurationSafetyTests.test_platform_backup_disabled_and_modern_rules_declared) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.019s
+
+OK
