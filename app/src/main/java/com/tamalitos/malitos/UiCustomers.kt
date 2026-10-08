@@ -1,71 +1,54 @@
 package com.tamalitos.malitos
 
 import android.os.Bundle
-import android.text.InputType
-import android.widget.LinearLayout
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.unit.dp
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 
-internal fun MainActivity.customersScreen() {
-    title("Directorio de clientes", "Busca por nombre o teléfono y consulta sus pedidos y saldo.")
-    body.addView(button("Agregar cliente", true) { customerForm() })
-    val results = column()
-    fun update(query: String) {
-        results.removeAllViews()
-        val customers = store.customers(query)
-        if (customers.isEmpty()) results.addView(card().apply {
-            addView(text(if (query.isBlank()) "Todavía no hay clientes" else "Sin coincidencias", 20, MainActivity.GREEN, true))
-            addView(text(if (query.isBlank()) "Agrega a tu primer cliente para comenzar." else "Prueba con otro nombre o teléfono."))
-        })
-        customers.forEach { customer ->
-            results.addView(card().apply {
-                addView(text(customer.name, 21, MainActivity.GREEN, true))
-                if (customer.phone.isNotBlank()) addView(text(customer.phone))
-                if (customer.address.isNotBlank()) addView(text(customer.address, 14))
-                addView(button("Ver cliente: ${customer.name}") { navigate("Clientes", customer.id) })
-            })
-        }
+@Composable internal fun Customers(a: MainActivity, state: BusinessUiState) {
+    val rows = state.customers.filter { customer -> a.customerQuery.isBlank() ||
+        listOf(customer.name, customer.phone, customer.address, customer.notes).any { it.contains(a.customerQuery.trim(), ignoreCase = true) } }
+    LazyColumn(Modifier.fillMaxSize().testTag("customer-list"), contentPadding = PaddingValues(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        item { Heading("Directorio de clientes", "Contacto, pedidos y cuenta del cliente") }
+        item { Action("Agregar cliente", true) { a.customerForm() } }
+        item { Input("Buscar cliente por nombre o teléfono", a.customerQuery) { a.customerQuery = it } }
+        if(rows.isEmpty()) item { Empty(if(a.customerQuery.isBlank()) "Todavía no hay clientes" else "Sin coincidencias", "Agrega un cliente o cambia la búsqueda.") }
+        items(rows, key = { it.id }) { customer -> InfoCard {
+            Text(customer.name, style = androidx.compose.material3.MaterialTheme.typography.titleLarge); Text(customer.phone); Text(customer.address)
+            Action("Ver cliente: ${customer.name}") { a.navigate("Clientes", customer.id) }
+        } }
     }
-    search(body, "Buscar cliente por nombre o teléfono", customerQuery) { customerQuery = it; guarded { update(it) } }
-    body.addView(results)
-    update(customerQuery)
 }
-
-internal fun MainActivity.customerDetail(id: Long) {
-    val customer = store.customers().firstOrNull { it.id == id }
-    if (customer == null) { selectedId = 0; customersScreen(); return }
-    title(customer.name, "Datos de contacto, pedidos y cuenta del cliente")
-    body.addView(button("Volver al directorio") { navigate("Clientes") })
-    body.addView(card().apply {
-        addView(text("Teléfono: ${customer.phone.ifBlank { "Sin registrar" }}"))
-        addView(text("Dirección: ${customer.address.ifBlank { "Sin registrar" }}"))
-        if (customer.notes.isNotBlank()) addView(text("Notas: ${customer.notes}"))
-    })
-    val orders = store.orders().filter { it.customerId == id }
-    val active = orders.filter { it.status != OrderStatus.CANCELLED }
-    val balance = active.fold(0L) { sum, order -> Math.addExact(sum, order.balanceCents) }
-    body.addView(card().apply { metric(this, "Saldo por cobrar", balance); addView(text("${orders.size} pedidos registrados")) })
-    body.addView(button("Nuevo pedido para este cliente", true) { orderForm(id) })
-    body.addView(button("Editar cliente") { customerForm(id) })
-    body.addView(button("Eliminar cliente") {
-        confirm("¿Eliminar a ${customer.name}?", "Solo se puede eliminar un cliente sin pedidos. Los clientes con historial se conservan para proteger tus registros.", "Eliminar") {
-            store.deleteCustomer(id); navigate("Clientes"); message("Cliente eliminado.")
-        }
-    })
-    body.addView(text("Historial de pedidos", 21, MainActivity.GREEN, true))
-    if (orders.isEmpty()) empty("Sin pedidos", "Crea un pedido para este cliente.")
-    orders.sortedByDescending { it.id }.forEach { orderRow(it) }
-}
-
-internal fun MainActivity.customerForm(id: Long = 0, draft: Bundle? = null) {
-    val existing = store.customers().firstOrNull { it.id == id }
-    val fields = column()
-    val name = field(fields, "Nombre del cliente *", draft?.string("name", existing?.name.orEmpty()) ?: existing?.name.orEmpty())
-    val phone = field(fields, "Teléfono", draft?.string("phone", existing?.phone.orEmpty()) ?: existing?.phone.orEmpty(), input = InputType.TYPE_CLASS_PHONE)
-    val address = field(fields, "Dirección habitual", draft?.string("address", existing?.address.orEmpty()) ?: existing?.address.orEmpty(), true)
-    val notes = field(fields, "Notas del cliente", draft?.string("notes", existing?.notes.orEmpty()) ?: existing?.notes.orEmpty(), true)
-    form(if (id == 0L) "Agregar cliente" else "Editar cliente", fields, "customer", id,
-        capture = { Bundle().apply { putString("name", name.value()); putString("phone", phone.value()); putString("address", address.value()); putString("notes", notes.value()) } }) {
-        val savedId = store.saveCustomer(Customer(id, required(name, "el nombre del cliente"), phone.value(), address.value(), notes.value()))
-        navigate("Clientes", savedId)
-        message("Cliente guardado.")
+@Composable internal fun CustomerDetail(a: MainActivity, state: BusinessUiState) {
+    val customer = state.customers.firstOrNull { it.id == a.selectedId }
+    Page {
+        if(customer == null) { Empty("Cliente no disponible", "Vuelve al directorio."); return@Page }
+        Heading(customer.name, "Datos de contacto, pedidos y cuenta")
+        Action("Volver al directorio") { a.navigate("Clientes") }
+        InfoCard { Text("Teléfono: ${customer.phone.ifBlank { "Sin registrar" }}"); Text("Dirección: ${customer.address.ifBlank { "Sin registrar" }}"); Text(customer.notes) }
+        val orders = state.orders.filter { it.customerId == customer.id }
+        Metric("Saldo por cobrar", orders.filter { it.status != OrderStatus.CANCELLED }.fold(0L) { sum, order -> Math.addExact(sum, order.balanceCents) })
+        Text("${orders.size} pedidos registrados")
+        Action("Nuevo pedido para este cliente", true) { a.orderForm(customer.id) }
+        Action("Editar cliente") { a.customerForm(customer.id) }
+        Action("Eliminar cliente") { a.confirm("¿Eliminar a ${customer.name}?", "Solo se puede eliminar un cliente sin pedidos. El historial se conserva para proteger tus registros.", "Eliminar") {
+            a.write(state.generation, { it.deleteCustomer(customer.id) }, { a.navigate("Clientes") })
+        } }
+        Heading("Historial de pedidos")
+        if(orders.isEmpty()) Empty("Sin pedidos", "Crea un pedido para este cliente.")
+        orders.sortedByDescending { it.id }.forEach { OrderRow(a, it) }
     }
+}
+internal fun MainActivity.customerForm(id: Long = 0, saved: Bundle? = null) {
+    val existing = model.state.value.customers.firstOrNull { it.id == id }
+    openEditor("customer", id, saved ?: Bundle().apply { putString("name", existing?.name.orEmpty()); putString("phone", existing?.phone.orEmpty()); putString("address", existing?.address.orEmpty()); putString("notes", existing?.notes.orEmpty()) })
+}
+@Composable internal fun CustomerFields(a: MainActivity) {
+    FormField(a, "Nombre del cliente *", "name"); FormField(a, "Teléfono", "phone")
+    FormField(a, "Dirección habitual", "address", multiline = true); FormField(a, "Notas del cliente", "notes", multiline = true)
 }

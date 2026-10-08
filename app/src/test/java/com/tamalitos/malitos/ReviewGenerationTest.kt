@@ -1,5 +1,6 @@
 package com.tamalitos.malitos
 
+import androidx.compose.ui.test.*
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.Application
@@ -21,48 +22,63 @@ import java.util.concurrent.TimeUnit
 
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [28], application = Application::class)
-class ReviewGenerationTest {
+internal class ReviewGenerationTest : ComposeUiHarness() {
     @Before fun clear() {
         val context = RuntimeEnvironment.getApplication(); context.deleteDatabase("tamalitos.db")
         DriveState.preferences(context).edit().clear().commit()
         java.io.File(context.filesDir, "drive-pre-restore").deleteRecursively()
     }
-    private fun views(v: View): List<View> = listOf(v) + if(v is ViewGroup) (0 until v.childCount).flatMap { views(v.getChildAt(it)) } else emptyList()
     @Test fun stalePaymentFormCannotPayRestoredOrderWithReusedId() {
-        val c = Robolectric.buildActivity(MainActivity::class.java).setup(); val a = c.get()
-        val customer = a.store.saveCustomer(Customer(name = "Original"))
-        val id = a.store.createOrder(customer, "2026-10-08", "", "", listOf(OrderItem(null, "Tamal", 1, 100)), InitialPayment.UNPAID)
-        a.paymentForm(id)
-        views(a.dialog!!.window!!.decorView).filterIsInstance<EditText>().first { it.contentDescription == "Importe del abono *" }.setText("1")
-        shadowOf(Looper.getMainLooper()).idle()
-        a.store.importBackup(a.store.exportBackup().replace("Original", "Restored"))
-        a.dialog!!.getButton(AlertDialog.BUTTON_POSITIVE).performClick()
-        assertTrue(a.store.order(id)!!.payments.isEmpty()); assertEquals("Restored", a.store.order(id)!!.customerName)
-        c.pause().stop().destroy()
+        launch(); val customer = activity.store.saveCustomer(Customer(name = "Original"))
+        val id = activity.store.createOrder(customer, "2026-10-08", "", "", listOf(OrderItem(null, "Tamal", 1, 100)), InitialPayment.UNPAID)
+        refresh(); compose.runOnIdle { activity.paymentForm(id) }; field("amount", "1")
+        activity.store.importBackup(activity.store.exportBackup().replace("Original", "Restored")); save()
+        assertTrue(activity.store.order(id)!!.payments.isEmpty()); assertEquals("Restored", activity.store.order(id)!!.customerName)
     }
     @Test fun staleStatusDialogCannotChangeRestoredOrderWithReusedId() {
-        val c = Robolectric.buildActivity(MainActivity::class.java).setup(); val a = c.get()
-        val customer = a.store.saveCustomer(Customer(name = "Original"))
-        val id = a.store.createOrder(customer, "2026-10-08", "", "", listOf(OrderItem(null, "Tamal", 1, 100)), InitialPayment.UNPAID)
-        a.navigate("Pedidos", id)
-        views(a.body).filterIsInstance<android.widget.Button>().first { it.text == "Cambiar estado" }.performClick()
-        shadowOf(Looper.getMainLooper()).idle()
-        val dialog = ShadowAlertDialog.getLatestAlertDialog()
-        shadowOf(dialog).clickOnItem(1); shadowOf(Looper.getMainLooper()).idle()
-        a.store.importBackup(a.store.exportBackup().replace("Original", "Restored"))
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).performClick(); shadowOf(Looper.getMainLooper()).idle()
-        assertEquals(OrderStatus.PENDING, a.store.order(id)!!.status)
-        c.pause().stop().destroy()
+        launch(); val customer = activity.store.saveCustomer(Customer(name = "Original"))
+        val id = activity.store.createOrder(customer, "2026-10-08", "", "", listOf(OrderItem(null, "Tamal", 1, 100)), InitialPayment.UNPAID)
+        navigate("Pedidos", id); click("Cambiar estado")
+        compose.onNode(hasTestTag("Estado del pedido") and hasAnyAncestor(hasTestTag("editor"))).activate(); compose.onNodeWithText("En preparación").activate()
+        activity.store.importBackup(activity.store.exportBackup().replace("Original", "Restored")); save()
+        assertEquals(OrderStatus.PENDING, activity.store.order(id)!!.status)
     }
     @Test fun calendarCallbackCapturedBeforeRestoreCannotChangeStaleDraft() {
-        val c = Robolectric.buildActivity(MainActivity::class.java).setup(); val a = c.get()
-        a.store.saveCustomer(Customer(name = "Original"))
-        val button = a.dateButton(a.column(), "Fecha", "2026-10-08"); button.performClick(); shadowOf(Looper.getMainLooper()).idle()
-        val picker = ShadowAlertDialog.getLatestAlertDialog() as DatePickerDialog
-        a.store.importBackup(a.store.exportBackup().replace("Original", "Restored"))
-        picker.updateDate(2026, 11, 20); picker.getButton(AlertDialog.BUTTON_POSITIVE).performClick(); shadowOf(Looper.getMainLooper()).idle()
-        assertEquals("2026-10-08", button.tag)
-        c.pause().stop().destroy()
+        launch(); activity.store.saveCustomer(Customer(name = "Original")); refresh()
+        compose.runOnIdle { activity.orderForm() }; field("date", "2026-10-08")
+        compose.onNodeWithTag("calendar-date").performScrollTo().performClick(); synchronizeCompose()
+        compose.onNodeWithTag("material-date-picker").assertExists()
+        compose.runOnIdle { activity.updateDraft("date", "2026-10-09") }
+        activity.store.importBackup(activity.store.exportBackup().replace("Original", "Restored"))
+        compose.onNodeWithText("Usar fecha").performClick(); synchronizeCompose()
+        assertEquals("2026-10-09", activity.draft.string("date"))
+        assertNotNull(activity.problem)
+        compose.onNodeWithTag("material-date-picker").assertDoesNotExist()
+    }
+    @Test fun calendarOpenedBeforeRestoreCannotRebindToNewEditorGeneration() {
+        launch(); activity.store.saveCustomer(Customer(name = "Original")); refresh()
+        compose.runOnIdle { activity.orderForm() }; field("date", "2026-10-08")
+        compose.onNodeWithTag("calendar-date").performScrollTo().performClick(); synchronizeCompose()
+        activity.store.importBackup(activity.store.exportBackup().replace("Original", "Restored"))
+        compose.runOnIdle { activity.orderForm(saved = android.os.Bundle(activity.draft).apply { putString("date", "2026-12-20") }) }
+        synchronizeCompose()
+        assertEquals(activity.store.generation, activity.draftGeneration)
+        compose.onNodeWithTag("material-date-picker").assertExists()
+        compose.onNodeWithText("Usar fecha").performClick(); synchronizeCompose()
+        assertEquals("2026-12-20", activity.draft.string("date"))
+        assertNotNull(activity.problem)
+    }
+    @Test fun calendarAcceptUpdatesTheActiveDraftAndCancelLeavesItUnchanged() {
+        launch(); compose.runOnIdle { activity.expenseForm() }; field("date", "2026-10-08")
+        compose.onNodeWithTag("calendar-date").performScrollTo().performClick(); synchronizeCompose()
+        compose.runOnIdle { activity.updateDraft("date", "2026-10-09") }
+        compose.onNodeWithText("Usar fecha").performClick(); synchronizeCompose()
+        assertEquals("2026-10-08", activity.draft.string("date"))
+        compose.onNodeWithTag("calendar-date").performScrollTo().performClick(); synchronizeCompose()
+        compose.runOnIdle { activity.updateDraft("date", "2026-10-10") }
+        compose.onNodeWithText("Volver al formulario").performClick(); synchronizeCompose()
+        assertEquals("2026-10-10", activity.draft.string("date"))
+        assertNull(activity.problem)
     }
     @Test fun successfulReplacementInvalidatesOtherStoreWorkButFailedReplacementDoesNot() {
         val context = RuntimeEnvironment.getApplication()

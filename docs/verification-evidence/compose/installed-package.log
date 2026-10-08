@@ -1,0 +1,163 @@
+Activity Resolver Table:
+  Non-Data Actions:
+      android.intent.action.MAIN:
+        cd97ceb com.tamalitos.malitos/.MainActivity filter d6e6034
+          Action: "android.intent.action.MAIN"
+          Category: "android.intent.category.LAUNCHER"
+
+Receiver Resolver Table:
+  Non-Data Actions:
+      android.intent.action.BATTERY_OKAY:
+        56bfa48 com.tamalitos.malitos/androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryNotLowProxy filter 9267a6e
+          Action: "android.intent.action.BATTERY_OKAY"
+          Action: "android.intent.action.BATTERY_LOW"
+      android.intent.action.ACTION_POWER_DISCONNECTED:
+        ebb0e1 com.tamalitos.malitos/androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryChargingProxy filter 886ede9
+          Action: "android.intent.action.ACTION_POWER_CONNECTED"
+          Action: "android.intent.action.ACTION_POWER_DISCONNECTED"
+      androidx.profileinstaller.action.SAVE_PROFILE:
+        3450e06 com.tamalitos.malitos/androidx.profileinstaller.ProfileInstallReceiver filter 2af6946
+          Action: "androidx.profileinstaller.action.SAVE_PROFILE"
+      android.intent.action.DEVICE_STORAGE_LOW:
+        d50fcc7 com.tamalitos.malitos/androidx.work.impl.background.systemalarm.ConstraintProxy$StorageNotLowProxy filter dc3d50f
+          Action: "android.intent.action.DEVICE_STORAGE_LOW"
+          Action: "android.intent.action.DEVICE_STORAGE_OK"
+      android.net.conn.CONNECTIVITY_CHANGE:
+        16a72f4 com.tamalitos.malitos/androidx.work.impl.background.systemalarm.ConstraintProxy$NetworkStateProxy filter fe6799c
+          Action: "android.net.conn.CONNECTIVITY_CHANGE"
+      android.intent.action.DEVICE_STORAGE_OK:
+        d50fcc7 com.tamalitos.malitos/androidx.work.impl.background.systemalarm.ConstraintProxy$StorageNotLowProxy filter dc3d50f
+          Action: "android.intent.action.DEVICE_STORAGE_LOW"
+          Action: "android.intent.action.DEVICE_STORAGE_OK"
+      androidx.profileinstaller.action.INSTALL_PROFILE:
+        3450e06 com.tamalitos.malitos/androidx.profileinstaller.ProfileInstallReceiver filter caf9388
+          Action: "androidx.profileinstaller.action.INSTALL_PROFILE"
+      android.intent.action.BATTERY_LOW:
+        56bfa48 com.tamalitos.malitos/androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryNotLowProxy filter 9267a6e
+          Action: "android.intent.action.BATTERY_OKAY"
+          Action: "android.intent.action.BATTERY_LOW"
+      android.intent.action.TIMEZONE_CHANGED:
+        6117a1d com.tamalitos.malitos/androidx.work.impl.background.systemalarm.RescheduleReceiver filter 8d77fa5
+          Action: "android.intent.action.BOOT_COMPLETED"
+          Action: "android.intent.action.TIME_SET"
+          Action: "android.intent.action.TIMEZONE_CHANGED"
+      android.intent.action.TIME_SET:
+        6117a1d com.tamalitos.malitos/androidx.work.impl.background.systemalarm.RescheduleReceiver filter 8d77fa5
+          Action: "android.intent.action.BOOT_COMPLETED"
+          Action: "android.intent.action.TIME_SET"
+          Action: "android.intent.action.TIMEZONE_CHANGED"
+      androidx.profileinstaller.action.SKIP_FILE:
+        3450e06 com.tamalitos.malitos/androidx.profileinstaller.ProfileInstallReceiver filter 8e57121
+          Action: "androidx.profileinstaller.action.SKIP_FILE"
+      androidx.profileinstaller.action.BENCHMARK_OPERATION:
+        3450e06 com.tamalitos.malitos/androidx.profileinstaller.ProfileInstallReceiver filter 8e75707
+          Action: "androidx.profileinstaller.action.BENCHMARK_OPERATION"
+      android.intent.action.BOOT_COMPLETED:
+        6117a1d com.tamalitos.malitos/androidx.work.impl.background.systemalarm.RescheduleReceiver filter 8d77fa5
+          Action: "android.intent.action.BOOT_COMPLETED"
+          Action: "android.intent.action.TIME_SET"
+          Action: "android.intent.action.TIMEZONE_CHANGED"
+      android.intent.action.ACTION_POWER_CONNECTED:
+        ebb0e1 com.tamalitos.malitos/androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryChargingProxy filter 886ede9
+          Action: "android.intent.action.ACTION_POWER_CONNECTED"
+          Action: "android.intent.action.ACTION_POWER_DISCONNECTED"
+      androidx.work.diagnostics.REQUEST_DIAGNOSTICS:
+        8140492 com.tamalitos.malitos/androidx.work.impl.diagnostics.DiagnosticsReceiver filter 772b32b
+          Action: "androidx.work.diagnostics.REQUEST_DIAGNOSTICS"
+      androidx.work.impl.background.systemalarm.UpdateProxies:
+        4d69e63 com.tamalitos.malitos/androidx.work.impl.background.systemalarm.ConstraintProxyUpdateReceiver filter b43cf7a
+          Action: "androidx.work.impl.background.systemalarm.UpdateProxies"
+
+Permissions:
+  Permission [com.tamalitos.malitos.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION] (735ca60):
+    sourcePackage=com.tamalitos.malitos
+    uid=10059 gids=null type=0 prot=signature
+    perm=Permission{bd09b19 com.tamalitos.malitos.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION}
+    packageSetting=PackageSetting{569d7de com.tamalitos.malitos/10059}
+
+Registered ContentProviders:
+  com.tamalitos.malitos/androidx.startup.InitializationProvider:
+    Provider{18abdbf com.tamalitos.malitos/androidx.startup.InitializationProvider}
+
+ContentProvider Authorities:
+  [com.tamalitos.malitos.androidx-startup]:
+    Provider{18abdbf com.tamalitos.malitos/androidx.startup.InitializationProvider}
+      applicationInfo=ApplicationInfo{e9d2c8c com.tamalitos.malitos}
+
+Key Set Manager:
+  [com.tamalitos.malitos]
+      Signing KeySets: 5
+
+Packages:
+  Package [com.tamalitos.malitos] (569d7de):
+    userId=10059
+    pkg=Package{cc6cfd5 com.tamalitos.malitos}
+    codePath=/data/app/com.tamalitos.malitos-ZWg1sEhJ8ugR-M5Cev7gCg==
+    resourcePath=/data/app/com.tamalitos.malitos-ZWg1sEhJ8ugR-M5Cev7gCg==
+    legacyNativeLibraryDir=/data/app/com.tamalitos.malitos-ZWg1sEhJ8ugR-M5Cev7gCg==/lib
+    primaryCpuAbi=x86_64
+    secondaryCpuAbi=null
+    versionCode=2 minSdk=27 targetSdk=34
+    versionName=1.1.0
+    splits=[base]
+    apkSigningVersion=2
+    applicationInfo=ApplicationInfo{e9d2c8c com.tamalitos.malitos}
+    flags=[ DEBUGGABLE HAS_CODE ALLOW_CLEAR_USER_DATA ]
+    privateFlags=[ PARTIALLY_DIRECT_BOOT_AWARE PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION ]
+    dataDir=/data/user/0/com.tamalitos.malitos
+    supportsScreens=[small, medium, large, xlarge, resizeable, anyDensity]
+    usesOptionalLibraries:
+      androidx.window.extensions
+      androidx.window.sidecar
+    timeStamp=2026-10-08 13:41:57
+    firstInstallTime=2026-10-08 13:27:29
+    lastUpdateTime=2026-10-08 13:42:05
+    signatures=PackageSignatures{7b793ea [2c32c38]}
+    installPermissionsFixed=true installStatus=1
+    pkgFlags=[ DEBUGGABLE HAS_CODE ALLOW_CLEAR_USER_DATA ]
+    declared permissions:
+      com.tamalitos.malitos.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION: prot=signature, INSTALLED
+    requested permissions:
+      android.permission.INTERNET
+      android.permission.ACCESS_NETWORK_STATE
+      android.permission.WAKE_LOCK
+      android.permission.RECEIVE_BOOT_COMPLETED
+      android.permission.FOREGROUND_SERVICE
+      com.tamalitos.malitos.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+    install permissions:
+      com.tamalitos.malitos.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION: granted=true
+      android.permission.RECEIVE_BOOT_COMPLETED: granted=true
+      android.permission.INTERNET: granted=true
+      android.permission.ACCESS_NETWORK_STATE: granted=true
+      android.permission.WAKE_LOCK: granted=true
+    User 0: ceDataInode=98972 installed=true hidden=false suspended=false stopped=false notLaunched=false enabled=0 instant=false virtual=false
+      gids=[3003]
+      runtime permissions:
+      enabledComponents:
+        androidx.work.impl.background.systemjob.SystemJobService
+
+Package Changes:
+  Sequence number=27
+  User 0:
+    seq=1, package=com.android.sdksetup
+    seq=6, package=com.android.messaging
+    seq=7, package=com.android.settings
+    seq=8, package=com.android.calendar
+    seq=9, package=com.android.camera2
+    seq=17, package=com.android.email
+    seq=18, package=com.android.gallery3d
+    seq=19, package=com.android.inputmethod.latin
+    seq=25, package=com.tamalitos.malitos
+    seq=26, package=com.tamalitos.malitos.test
+
+
+Dexopt state:
+  [com.tamalitos.malitos]
+    path: /data/app/com.tamalitos.malitos-ZWg1sEhJ8ugR-M5Cev7gCg==/base.apk
+      x86_64: /data/app/com.tamalitos.malitos-ZWg1sEhJ8ugR-M5Cev7gCg==/oat/x86_64/base.odex[status=kOatUpToDate, compila
+      tion_filter=quicken]
+
+
+Compiler stats:
+  [com.tamalitos.malitos]
+     base.apk - 7645

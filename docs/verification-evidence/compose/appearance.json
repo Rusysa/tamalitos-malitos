@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "nightMode": "yes",
+  "fontScale": 1.3,
+  "wideDestinationsVisible": true,
+  "wideListDetailVisible": true,
+  "phoneEditorActionsVisible": true,
+  "screenshots": [
+    "docs/capturas/compose/tableta-oscura-fuente-ampliada.png",
+    "docs/capturas/compose/telefono-oscuro-fuente-ampliada.png"
+  ],
+  "limits": "Semantic visibility plus captured real display; compact viewport emulated inside tablet display. Visual inspection required. No record saved."
+}

@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/home/rudys/proyectos/App gestion kt/tools/compose_window_qa.py", line 95, in <module>
+    main()
+    ~~~~^^
+  File "/home/rudys/proyectos/App gestion kt/tools/compose_window_qa.py", line 79, in main
+    raise AssertionError('Real save tap did not reach the editor action with keyboard open')
+AssertionError: Real save tap did not reach the editor action with keyboard open

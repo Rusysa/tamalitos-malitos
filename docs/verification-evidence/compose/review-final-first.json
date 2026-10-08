@@ -1,0 +1,26 @@
+{
+  "passed": false,
+  "security_concerns": [],
+  "logic_errors": [
+    {
+      "path": "app/src/main/java/com/tamalitos/malitos/BusinessViewModel.kt",
+      "line": 63,
+      "problema": "Una escritura fallida descarta los refresh solicitados mientras writing=true. refresh actualiza el rango y readRequest, pero retorna sin programar lectura; el catch de mutate simplemente libera busy y retorna. El informe anterior puede quedar presentado bajo el nuevo periodo, sin indicador de carga.",
+      "reproduccion_minima": "Con ControlledIo y gastos distintos en dos periodos: cargar el primero; admitir mutate con una acción que falle por validación; solicitar refresh del segundo antes de ejecutar la escritura; drenar IO. No se programa lectura del segundo periodo y periodReport conserva el primero. En la UI es alcanzable cerrando con Volver un formulario cuyo guardado está pendiente y aplicando otro periodo en Informes.",
+      "correccion": "Procesar también la lectura pendiente cuando falla la escritura, manteniendo el token de última solicitud y sin repetir la mutación. Añadir el caso a ComposeReviewConcurrencyTest."
+    },
+    {
+      "path": "app/src/main/java/com/tamalitos/malitos/UiWidgets.kt",
+      "line": 134,
+      "problema": "La finalización asíncrona del guardado cierra incondicionalmente el editor actual, aunque ya sea otro formulario. Volver permanece habilitado durante busy y openEditor solo bloquea operaciones de respaldo, no guardados pendientes. La generación de la base no distingue dos editores abiertos dentro de la misma generación.",
+      "reproduccion_minima": "Retener la escritura o su lectura posterior mediante un dispatcher controlado; guardar el cliente A; pulsar Volver; abrir Agregar cliente y escribir el borrador B mientras el primer guardado sigue pendiente; liberar IO. La finalización de A ejecuta closeEditor, borra B y navega al detalle de A. El callback de error también puede asignar al editor B un error correspondiente a A.",
+      "correccion": "Vincular los callbacks a una identidad propia del editor y cerrar/asignar errores únicamente si sigue activo ese editor, o impedir explícitamente abrir otro mientras termina el guardado. Añadir cobertura de cierre y reapertura sin restauración."
+    }
+  ],
+  "suggestions": [
+    {"path": "app/src/main/java/com/tamalitos/malitos/UiCustomers.kt", "line": 19, "detalle": "La búsqueda ya incluye correctamente dirección y notas; conviene que su etiqueta también mencione esos campos."},
+    {"path": "app/src/androidTest/java/com/tamalitos/malitos/ComposeAdaptiveInstrumentedTest.kt", "line": 32, "detalle": "El comentario atribuye a performClick una garantía contra la oclusión física del IME que no proporciona el despacho dentro de Compose. Mantener esa garantía asociada a la prueba complementaria con adb input de tools/compose_window_qa.py."}
+  ],
+  "summary": "Revisión estática del diff y fuentes/pruebas actuales, incluidos archivos no rastreados. Las correcciones de admisión de escrituras, orden de lecturas, selección SAF y búsqueda están presentes; no encontré bloqueadores adicionales en calendario, confirmaciones Drive ni layout IME. Persisten las dos carreras descritas. No modifiqué archivos, ejecuté Gradle, instalé aplicaciones ni realicé pruebas visuales o de Drive real.",
+  "delegation_id": "deleg_39de9e89"
+}

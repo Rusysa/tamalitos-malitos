@@ -14,7 +14,8 @@ import java.util.concurrent.TimeUnit
 class DriveController(
     private val activity: Activity,
     private val onStatus: (String) -> Unit,
-    private val onRestored: () -> Unit
+    private val onRestored: () -> Unit,
+    private val composeConfirmation: ((String, String, () -> Unit, () -> Unit) -> Unit)? = null
 ) {
     private val context = activity.applicationContext
     private val main = Handler(Looper.getMainLooper())
@@ -170,6 +171,13 @@ class DriveController(
         if (!alive() || epoch != DriveState.epoch(context)) { busy = false; return }
         val expectedGeneration = BusinessStore(context).use { it.generation }
         var accepted = false
+        composeConfirmation?.let { show ->
+            show("¿Reemplazar todos los datos locales?",
+                "Respaldo de Drive: ${restore.createdTime}. Se reemplazan clientes, productos, pedidos, pagos y gastos; no se fusionan datos. Los cambios posteriores se perderán. Antes se guarda una copia JSON local de seguridad, disponible en Exportar copia de seguridad previa.",
+                { applyRestore(epoch, restore, expectedGeneration) },
+                { busy = false; DriveState.notice(context, epoch, "Restauración cancelada; los datos locales no se cambiaron."); publish() })
+            return
+        }
         AlertDialog.Builder(activity)
             .setTitle("¿Reemplazar todos los datos locales?")
             .setMessage("Respaldo de Drive: ${restore.createdTime}.\n\nSe reemplazarán clientes, productos, pedidos, pagos y gastos. No se fusionan datos. Los cambios posteriores a ese respaldo se perderán.\n\nAntes de aplicar se guardará una copia JSON local de seguridad. Para conservarla fuera de esta app, cancela y exporta tus datos locales primero.")

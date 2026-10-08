@@ -1,6 +1,6 @@
 # Verificación de la entrega
 
-AVISO AL PUBLICAR EN GITHUB: este documento y sus evidencias son históricos y no certifican el estado del código actual. La comprobación más reciente alcanza `assembleDebug`, pero las pruebas JVM no pueden compilar: `BoundaryAllocationTest.kt:90–91` usa `p.id` aunque `saveProduct` devuelve un `Long`. La última corrección no tiene aprobación final independiente. Consultar también el estado del proyecto en README.md; esta publicación es una versión en desarrollo, no una entrega validada para producción.
+DOCUMENTO HISTÓRICO de la interfaz con controles clásicos. El error posterior de `BoundaryAllocationTest.kt` ya fue corregido durante la migración a Compose, pero los resultados enumerados abajo pertenecen al APK anterior y no certifican el rediseño. Consultar README.md, docs/REDISENO.md y las nuevas evidencias de `docs/verification-evidence/compose/` para el estado de la versión 1.1.0. No se presenta como una entrega validada para producción.
 
 ## Resultado de ejecución real
 

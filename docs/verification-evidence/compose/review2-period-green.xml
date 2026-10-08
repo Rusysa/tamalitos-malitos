@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.tamalitos.malitos.ComposeReviewConcurrencyTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-10-08T18:56:56" hostname="rudysfedora" time="5.146">
+  <properties/>
+  <testcase name="earlierRefreshCannotEnableSavingWhileLatestRefreshIsPending" classname="com.tamalitos.malitos.ComposeReviewConcurrencyTest" time="4.388"/>
+  <testcase name="reversedReportReadsKeepTheLatestRequestedPeriod" classname="com.tamalitos.malitos.ComposeReviewConcurrencyTest" time="0.155"/>
+  <testcase name="refreshWhilePostWriteReadIsPendingPublishesLatestRangeWithoutRepeatingWrite" classname="com.tamalitos.malitos.ComposeReviewConcurrencyTest" time="0.088"/>
+  <testcase name="committedWriteStillCompletesWhenItsRefreshFailsSoEditorDoesNotOfferDuplicateRetry" classname="com.tamalitos.malitos.ComposeReviewConcurrencyTest" time="0.098"/>
+  <testcase name="restoredGenerationStillRejectsTheQueuedWriteWithoutRunningItsAction" classname="com.tamalitos.malitos.ComposeReviewConcurrencyTest" time="0.085"/>
+  <testcase name="supersededPostWriteReadFailureStillCollectsLatestRange" classname="com.tamalitos.malitos.ComposeReviewConcurrencyTest" time="0.062"/>
+  <testcase name="staleReadCompletionCannotReleaseAnAdmittedWrite" classname="com.tamalitos.malitos.ComposeReviewConcurrencyTest" time="0.061"/>
+  <testcase name="refreshDuringWriteCannotReleaseGuardOrDuplicateCustomerOrderOrPayment" classname="com.tamalitos.malitos.ComposeReviewConcurrencyTest" time="0.095"/>
+  <testcase name="rejectedWriteStillPublishesPeriodRequestedWhileWriteWasPending" classname="com.tamalitos.malitos.ComposeReviewConcurrencyTest" time="0.058"/>
+  <testcase name="staleReadFailureCannotReleaseAnAdmittedWriteOrShowItsOldError" classname="com.tamalitos.malitos.ComposeReviewConcurrencyTest" time="0.054"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

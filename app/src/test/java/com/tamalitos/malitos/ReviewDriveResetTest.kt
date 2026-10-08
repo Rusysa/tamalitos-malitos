@@ -1,5 +1,6 @@
 package com.tamalitos.malitos
 
+import androidx.compose.ui.test.*
 import android.app.Activity
 import android.app.Application
 import android.content.Intent
@@ -18,25 +19,19 @@ import org.robolectric.shadows.ShadowAlertDialog
 
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [28], application = Application::class)
-class ReviewDriveResetTest {
+internal class ReviewDriveResetTest : ComposeUiHarness() {
     @Before fun clear() { DriveState.preferences(RuntimeEnvironment.getApplication()).edit().clear().commit() }
-    private fun views(v: View): List<View> = listOf(v) + if(v is ViewGroup) (0 until v.childCount).flatMap { views(v.getChildAt(it)) } else emptyList()
     @Test fun coldDisconnectedPendingAuthorizationHasAVisibleResetAndCanRecover() {
         val context = RuntimeEnvironment.getApplication()
         DriveState.preferences(context).edit().putString("pending_action", "RESTORE").putLong("pending_epoch", 0).commit()
-        val c = Robolectric.buildActivity(MainActivity::class.java).setup(); val a = c.get(); a.navigate("Respaldo")
-        assertFalse(DriveController.isConnected(a))
-        val reset = views(a.body).filterIsInstance<Button>().firstOrNull { it.text.contains("Restablecer") || it.text.contains("Desconectar") }
-        assertNotNull("first-time interrupted auth must not hide the only reset", reset)
-        reset!!.performClick(); shadowOf(android.os.Looper.getMainLooper()).idle()
-        ShadowAlertDialog.getLatestAlertDialog().getButton(android.app.AlertDialog.BUTTON_POSITIVE).performClick()
-        shadowOf(android.os.Looper.getMainLooper()).idle()
-        assertFalse(DriveState.preferences(a).contains("pending_action")); assertEquals(1L, DriveState.epoch(a))
-        assertTrue(a.drive.handleActivityResult(9041, Activity.RESULT_OK, Intent()))
-        assertFalse(DriveController.isConnected(a))
-        a.drive.connectAndBackup()
-        assertTrue("recovery must launch authorization rather than remain pending", DriveState.status(a).contains("Solicitando autorización"))
-        c.pause().stop().destroy()
+        launch(); navigate("Respaldo")
+        assertFalse(DriveController.isConnected(activity))
+        click("Restablecer autorización de Google Drive"); compose.onNodeWithTag("confirm-action").activate(); settled()
+        assertFalse(DriveState.preferences(activity).contains("pending_action")); assertEquals(1L, DriveState.epoch(activity))
+        assertTrue(activity.drive.handleActivityResult(9041, Activity.RESULT_OK, Intent()))
+        assertFalse(DriveController.isConnected(activity))
+        activity.drive.connectAndBackup()
+        assertTrue("recovery must launch authorization rather than remain pending", DriveState.status(activity).contains("Solicitando autorización"))
     }
     @Test fun staleResultWithoutAPendingResolutionCannotReleaseAnActiveOperation() {
         val c = Robolectric.buildActivity(Activity::class.java).setup(); val a = c.get()

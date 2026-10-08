@@ -1,0 +1,9 @@
+Verified source ZIP: /home/rudys/proyectos/App gestion kt/entregables/Tamalitos-Malitos-codigo.zip
+Files: 188
+Bytes: 5180118
+SHA-256: f69bfbdff5e9eedc6b1d82156e935fe8a680d072ee3b452265f60d05d2e12820
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import zipfile; z=zipfile.ZipFile("entregables/Tamalitos-Malitos-codigo.zip"); content=z.read("gradle.properties").decode(); assert "org.gradle.java.home=" not in content,"Source ZIP hardcodes this machine JVM path"
+                                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Source ZIP hardcodes this machine JVM path

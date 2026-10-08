@@ -87,8 +87,8 @@ class BoundaryAllocationTest {
         val c1 = store.saveCustomer(Customer(name="C1")) // ID 1
         val c2 = store.saveCustomer(Customer(name="C2")) // ID 2
         val p = store.saveProduct(Product(name="P1", priceCents = 100))
-        val order1 = store.createOrder(c1, "2026-10-08", "A", "", listOf(OrderItem(p.id, "P1", 1, 100)), InitialPayment.FULL)
-        val order2 = store.createOrder(c2, "2026-10-09", "B", "", listOf(OrderItem(p.id, "P1", 1, 100)), InitialPayment.FULL)
+        val order1 = store.createOrder(c1, "2026-10-08", "A", "", listOf(OrderItem(p, "P1", 1, 100)), InitialPayment.FULL)
+        val order2 = store.createOrder(c2, "2026-10-09", "B", "", listOf(OrderItem(p, "P1", 1, 100)), InitialPayment.FULL)
         
         // Export is by delivery_date, id. If order2 is 2026-10-09 and order1 is 2026-10-08, 
         // the snapshot puts order1 then order2. 
@@ -99,6 +99,8 @@ class BoundaryAllocationTest {
         val o2 = orders.getJSONObject(1)
         o1.put("id", 999_999_000_000L)
         o2.put("id", 2L)
+        val payments = o1.getJSONArray("payments")
+        for (index in 0 until payments.length()) payments.getJSONObject(index).put("orderId", 999_999_000_000L)
         // Now order[0] is ceiling, order[1] is 2.
         
         store.importBackup(realExport.toString())

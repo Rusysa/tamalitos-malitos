@@ -1,262 +1,182 @@
 package com.tamalitos.malitos
 
-import android.app.Activity
-import android.app.AlertDialog
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.view.Gravity
-import android.view.View
-import android.widget.*
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.OnBackPressedCallback
+import androidx.compose.runtime.*
+import androidx.lifecycle.ViewModelProvider
 import java.time.LocalDate
 
-/** Native, offline-first shell. All Drive I/O is delegated to DriveController. */
-class MainActivity : Activity() {
+internal data class UiConfirmation(val title: String, val detail: String, val label: String, val generation: Long,
+    val action: () -> Unit, val cancel: () -> Unit = {})
+
+class MainActivity : ComponentActivity() {
     internal lateinit var store: BusinessStore
     internal lateinit var drive: DriveController
-    internal lateinit var body: LinearLayout
-    internal var screen = "Inicio"
-    internal var selectedId = 0L
-    internal var customerQuery = ""
-    internal var orderQuery = ""
-    internal var orderFilter = 0
-    internal var reportFrom = LocalDate.now().withDayOfMonth(1).toString()
-    internal var reportTo = LocalDate.now().toString()
-    internal var expenseFrom = ""
-    internal var expenseTo = ""
-    internal var draftKind: String? = null
-    internal var draftId = 0L
-    internal var draftGeneration = 0L
-    internal var pendingImportGeneration = 0L
-    internal val transientDialogs = mutableListOf<android.app.Dialog>()
-    private var renderGeneration = 0L
-    internal var captureDraft: (() -> Bundle)? = null
-    internal var dialog: AlertDialog? = null
-    internal var pendingSafetyPath: String? = null
-    internal var pendingImportUri: String? = null
-    internal var importDialog: AlertDialog? = null
-    private var restoringDraft: Bundle? = null
-    private var screenScroll: ScrollView? = null
-    private var scrollPosition = 0
+    internal lateinit var model: BusinessViewModel
+    internal var screen: String
+        get() = model.session.screen
+        set(value) { model.session.screen = value }
+    internal var selectedId: Long
+        get() = model.session.selectedId
+        set(value) { model.session.selectedId = value }
+    internal var customerQuery: String
+        get() = model.session.customerQuery
+        set(value) { model.session.customerQuery = value }
+    internal var orderQuery: String
+        get() = model.session.orderQuery
+        set(value) { model.session.orderQuery = value }
+    internal var orderFilter: Int
+        get() = model.session.orderFilter
+        set(value) { model.session.orderFilter = value }
+    internal var reportFrom: String
+        get() = model.session.reportFrom
+        set(value) { model.session.reportFrom = value }
+    internal var reportTo: String
+        get() = model.session.reportTo
+        set(value) { model.session.reportTo = value }
+    internal var expenseFrom: String
+        get() = model.session.expenseFrom
+        set(value) { model.session.expenseFrom = value }
+    internal var expenseTo: String
+        get() = model.session.expenseTo
+        set(value) { model.session.expenseTo = value }
+    internal var draftKind: String?
+        get() = model.session.draftKind
+        set(value) { model.session.draftKind = value }
+    internal var draftId: Long
+        get() = model.session.draftId
+        set(value) { model.session.draftId = value }
+    internal var draftGeneration: Long
+        get() = model.session.draftGeneration
+        set(value) { model.session.draftGeneration = value }
+    internal var editorIdentity: Long
+        get() = model.session.editorIdentity
+        set(value) { model.session.editorIdentity = value }
+    internal var draft: Bundle
+        get() = model.session.draft
+        set(value) { model.session.draft = value }
+    internal var draftError: String
+        get() = model.session.draftError
+        set(value) { model.session.draftError = value }
+    internal var pendingImportGeneration: Long
+        get() = model.session.pendingImportGeneration
+        set(value) { model.session.pendingImportGeneration = value }
+    internal var pendingSafetyPath: String?
+        get() = model.session.pendingSafetyPath
+        set(value) { model.session.pendingSafetyPath = value }
+    internal var pendingImportUri: String?
+        get() = model.session.pendingImportUri
+        set(value) { model.session.pendingImportUri = value }
+    internal var pendingDocumentGeneration: Long
+        get() = model.session.pendingDocumentGeneration
+        set(value) { model.session.pendingDocumentGeneration = value }
+    internal var confirmation by mutableStateOf<UiConfirmation?>(null)
+    internal var safetyChoices by mutableStateOf<List<java.io.File>>(emptyList())
+    internal var notice: String
+        get() = model.session.notice
+        set(value) { model.session.notice = value }
+    internal var problem: String?
+        get() = model.session.problem
+        set(value) { model.session.problem = value }
+    internal var backupRevision by mutableIntStateOf(0)
+    internal val captureDraft: (() -> Bundle)? get() = draftKind?.let { { Bundle(draft) } }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        store = BusinessStore(this)
+        store = BusinessStore(applicationContext)
+        model = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(application))[BusinessViewModel::class.java]
         UiBackupJobs.attach(this)
-        drive = DriveController(this, { status ->
-            runOnUiThread { if (!isDestroyed) { message(status); if (screen == "Respaldo") render() } }
-        }, { runOnUiThread { if (!isDestroyed) onBusinessRestored() } })
-        savedInstanceState?.let {
-            screen = it.getString("screen", "Inicio")
-            selectedId = it.getLong("selectedId")
-            customerQuery = it.getString("customerQuery", "")
-            orderQuery = it.getString("orderQuery", "")
-            orderFilter = it.getInt("orderFilter")
-            reportFrom = it.getString("reportFrom", reportFrom)
-            reportTo = it.getString("reportTo", reportTo)
-            expenseFrom = it.getString("expenseFrom", "")
-            expenseTo = it.getString("expenseTo", "")
-            scrollPosition = it.getInt("scroll")
-            draftKind = it.getString("draftKind")
-            draftId = it.getLong("draftId")
-            restoringDraft = it.getBundle("draft")
-            pendingImportUri = it.getString("pendingImportUri")
-            pendingSafetyPath = it.getString("pendingSafetyPath")
-            draftGeneration = it.getLong("draftGeneration", Long.MIN_VALUE)
-            pendingImportGeneration = it.getLong("pendingImportGeneration", Long.MIN_VALUE)
-            if (it.getLong("renderGeneration", Long.MIN_VALUE) != store.generation) selectedId = 0L
-            if (draftGeneration != store.generation) { draftKind = null; draftId = 0L; restoringDraft = null }
+        drive = DriveController(this, { status -> runOnUiThread { if (!isDestroyed) { message(status); render() } } },
+            { runOnUiThread { if (!isDestroyed) onBusinessRestored() } },
+            { title, detail, accept, cancel -> confirm(title, detail, "Restaurar y reemplazar", cancel, accept) })
+        if (!model.session.initialized) savedInstanceState?.let { saved ->
+            screen = saved.getString("screen", "Inicio"); selectedId = saved.getLong("selectedId")
+            customerQuery = saved.getString("customerQuery", ""); orderQuery = saved.getString("orderQuery", "")
+            orderFilter = saved.getInt("orderFilter"); reportFrom = saved.getString("reportFrom", reportFrom)
+            reportTo = saved.getString("reportTo", reportTo); expenseFrom = saved.getString("expenseFrom", ""); expenseTo = saved.getString("expenseTo", "")
+            draftGeneration = saved.getLong("draftGeneration", Long.MIN_VALUE)
+            draftKind = saved.getString("draftKind"); draftId = saved.getLong("draftId"); draft = saved.getBundle("draft") ?: Bundle()
+            pendingSafetyPath = saved.getString("pendingSafetyPath"); pendingImportUri = saved.getString("pendingImportUri")
+            pendingImportGeneration = saved.getLong("pendingImportGeneration", Long.MIN_VALUE)
+            pendingDocumentGeneration = saved.getLong("pendingDocumentGeneration", Long.MIN_VALUE)
+            if (saved.getLong("renderGeneration", Long.MIN_VALUE) != store.generation) selectedId = 0
+            if (draftGeneration != store.generation) closeEditor()
             if (pendingImportGeneration != store.generation) pendingImportUri = null
         }
+        // Retained ViewModels also require invalidation; do not only check deserialized Bundles.
+        if (draftKind != null && draftGeneration != store.generation) closeEditor()
+        if (pendingImportUri != null && pendingImportGeneration != store.generation) pendingImportUri = null
+        if (model.session.initialized && model.state.value.generation != store.generation) selectedId = 0
+        model.session.initialized = true
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                when { draftKind != null -> closeEditor(); confirmation != null -> cancelConfirmation()
+                    selectedId != 0L -> selectedId = 0; screen != "Inicio" -> navigate("Inicio")
+                    else -> { isEnabled = false; onBackPressedDispatcher.onBackPressed(); isEnabled = true } }
+            }
+        })
+        setContent { TamalitosTheme { TamalitosApp(this) } }
         render()
-        draftKind?.let { kind -> guarded { store.withGeneration(draftGeneration) { reopenDraft(kind, draftId, restoringDraft) } } }
-        pendingImportUri?.let { uri -> guarded { store.withGeneration(pendingImportGeneration) { confirmLocalImport(android.net.Uri.parse(uri)) } } }
+        pendingImportUri?.let { confirmLocalImport(android.net.Uri.parse(it), pendingImportGeneration) }
     }
-
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putString("screen", screen)
-        outState.putLong("selectedId", selectedId)
-        outState.putString("customerQuery", customerQuery)
-        outState.putString("orderQuery", orderQuery)
-        outState.putInt("orderFilter", orderFilter)
-        outState.putString("reportFrom", reportFrom)
-        outState.putString("reportTo", reportTo)
-        outState.putString("expenseFrom", expenseFrom)
-        outState.putString("expenseTo", expenseTo)
-        outState.putInt("scroll", screenScroll?.scrollY ?: 0)
-        outState.putString("draftKind", draftKind)
-        outState.putLong("draftId", draftId)
-        outState.putLong("draftGeneration", draftGeneration)
-        outState.putLong("pendingImportGeneration", pendingImportGeneration)
-        outState.putLong("renderGeneration", renderGeneration)
-        outState.putBundle("draft", captureDraft?.invoke())
-        outState.putString("pendingImportUri", pendingImportUri)
-        outState.putString("pendingSafetyPath", pendingSafetyPath)
+        outState.putString("screen", screen); outState.putLong("selectedId", selectedId)
+        outState.putString("customerQuery", customerQuery); outState.putString("orderQuery", orderQuery); outState.putInt("orderFilter", orderFilter)
+        outState.putString("reportFrom", reportFrom); outState.putString("reportTo", reportTo)
+        outState.putString("expenseFrom", expenseFrom); outState.putString("expenseTo", expenseTo)
+        outState.putString("draftKind", draftKind); outState.putLong("draftId", draftId); outState.putBundle("draft", Bundle(draft))
+        outState.putLong("draftGeneration", draftGeneration); outState.putLong("renderGeneration", model.state.value.generation)
+        outState.putLong("pendingImportGeneration", pendingImportGeneration); outState.putString("pendingImportUri", pendingImportUri)
+        outState.putString("pendingSafetyPath", pendingSafetyPath); outState.putLong("pendingDocumentGeneration", pendingDocumentGeneration)
         super.onSaveInstanceState(outState)
     }
-
     override fun onDestroy() {
-        UiBackupJobs.detach(this)
-        importDialog?.dismiss()
-        dialog?.dismiss()
-        transientDialogs.toList().forEach { it.dismiss() }
-        store.close()
-        super.onDestroy()
+        UiBackupJobs.detach(this); store.close(); super.onDestroy()
+        // Downloaded Drive approvals belong to this Activity. Explicitly cancel on
+        // recreation rather than retain callback lambdas or silently lose the dialog.
+        // Local imports are URI/generation state and are rebuilt by onCreate instead.
+        if (pendingImportUri == null) cancelConfirmation() else confirmation = null
     }
-
-    @Deprecated("Native Activity result bridge required by the Drive contract")
+    @Deprecated("SAF and Google authorization result bridge")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (drive.handleActivityResult(requestCode, resultCode, data)) return
-        handleLocalBackupResult(requestCode, resultCode, data)
+        if (!drive.handleActivityResult(requestCode, resultCode, data)) handleLocalBackupResult(requestCode, resultCode, data)
     }
-
-    @Deprecated("Native Activity back navigation")
-    override fun onBackPressed() {
-        if (UiBackupJobs.isRunning) { message("Espera a que termine la operación de respaldo."); return }
-        if (selectedId != 0L) { selectedId = 0; render() }
-        else if (screen != "Inicio") navigate("Inicio")
-        else super.onBackPressed()
-    }
-
-    internal fun navigate(destination: String, id: Long = 0) {
-        screen = destination
-        selectedId = id
-        scrollPosition = 0
-        render()
-    }
-
+    internal fun navigate(destination: String, id: Long = 0) { screen = destination; selectedId = id; render() }
+    internal fun render() { backupRevision++; model.refresh(reportFrom, reportTo, ::error) }
     internal fun onBusinessRestored() {
-        dialog?.dismiss(); dialog = null
-        importDialog?.dismiss(); importDialog = null
-        transientDialogs.toList().forEach { it.dismiss() }; transientDialogs.clear()
-        draftKind = null; draftId = 0L; captureDraft = null; restoringDraft = null
-        pendingImportUri = null
-        selectedId = 0L; screen = "Inicio"; render()
+        closeEditor(); confirmation?.cancel?.invoke(); confirmation = null; safetyChoices = emptyList()
+        pendingImportUri = null; pendingSafetyPath = null; selectedId = 0; screen = "Inicio"; render()
     }
-
-    internal fun render() = store.withCurrentData { renderCurrentData() }
-
-    private fun renderCurrentData() {
-        renderGeneration = store.generation
-        val root = column().apply { setBackgroundColor(CREAM) }
-        val brand = column().apply { setPadding(dp(20), dp(18), dp(20), dp(10)); setBackgroundColor(GREEN) }
-        brand.addView(text("Tamalitos Malitos", 24, Color.WHITE, true))
-        brand.addView(text("Tu negocio, claro y en orden", 14, Color.WHITE))
-        root.addView(brand)
-        val nav = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
-        listOf("Inicio", "Clientes", "Pedidos", "Gastos", "Informes", "Productos", "Respaldo").forEach { name ->
-            nav.addView(button(name, primary = name == screen) { navigate(name) })
-        }
-        root.addView(HorizontalScrollView(this).apply { isHorizontalScrollBarEnabled = false; addView(nav) })
-        body = column().apply { setPadding(dp(18), dp(12), dp(18), dp(28)) }
-        val scroll = ScrollView(this).apply { isFillViewport = true; addView(body) }
-        screenScroll = scroll
-        root.addView(scroll, LinearLayout.LayoutParams(-1, 0, 1f))
-        setContentView(root)
-        guarded {
-            when (screen) {
-                "Clientes" -> if (selectedId == 0L) customersScreen() else customerDetail(selectedId)
-                "Pedidos" -> if (selectedId == 0L) ordersScreen() else orderDetail(selectedId)
-                "Gastos" -> expensesScreen()
-                "Informes" -> reportsScreen()
-                "Productos" -> productsScreen()
-                "Respaldo" -> backupScreen()
-                else -> dashboard()
-            }
-        }
-        if (scrollPosition > 0) scroll.post { scroll.scrollTo(0, scrollPosition); scrollPosition = 0 }
+    internal fun message(value: String) { notice = value }
+    internal fun error(value: String) { problem = value }
+    internal fun guarded(action: () -> Unit) { try { action() } catch(e: Exception) { error(e.message ?: "No se pudo completar la operación.") } }
+    internal fun confirm(heading: String, detail: String, label: String, action: () -> Unit) = confirm(heading, detail, label, {}, action)
+    internal fun confirm(heading: String, detail: String, label: String, cancel: () -> Unit, action: () -> Unit) {
+        confirmation = UiConfirmation(heading, detail, label, store.generation, action, cancel)
     }
-
-    private fun dashboard() {
-        title("Resumen del negocio", "Funciona sin conexión. Tus datos se guardan en este dispositivo.")
-        val report = store.report()
-        val summary = card()
-        metric(summary, "Ventas registradas", report.salesCents)
-        metric(summary, "Dinero cobrado", report.collectedCents)
-        metric(summary, "Gastos", report.expensesCents)
-        metric(summary, "Saldo por cobrar", report.receivablesCents)
-        metric(summary, "Flujo de efectivo", report.cashFlowCents)
-        summary.addView(text("${report.pendingOrders} pedidos pendientes · ${report.deliveredOrders} entregados", 15))
-        body.addView(summary)
-        body.addView(button("Nuevo pedido", true) { orderForm() })
-        body.addView(button("Registrar gasto") { expenseForm() })
-        body.addView(button("Agregar cliente") { customerForm() })
-        val upcoming = store.orders().filter { it.status != OrderStatus.CANCELLED && it.status != OrderStatus.DELIVERED }
-            .sortedBy { it.deliveryDate }.take(5)
-        body.addView(text("Próximas entregas", 21, GREEN, true))
-        if (upcoming.isEmpty()) empty("No hay entregas pendientes", "Agrega un cliente y crea tu primer pedido.")
-        upcoming.forEach { orderRow(it) }
-        body.addView(button("Ver informes por periodo") { navigate("Informes") })
+    internal fun cancelConfirmation() { confirmation?.cancel?.invoke(); confirmation = null; pendingImportUri = null }
+    internal fun acceptConfirmation(captured: UiConfirmation? = confirmation) {
+        captured ?: return
+        if (confirmation !== captured) { error("Esta confirmación ya no está activa. Vuelve a abrir la acción."); return }
+        confirmation = null
+        try { store.withGeneration(captured.generation) { captured.action() } }
+        catch(e: Exception) { captured.cancel(); error(e.message ?: "No se pudo completar la operación.") }
     }
-
-    internal fun column() = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
-    internal fun dp(value: Int) = (value * resources.displayMetrics.density).toInt()
-    internal fun text(value: String, size: Int = 16, color: Int = INK, bold: Boolean = false) = TextView(this).apply {
-        text = value; textSize = size.toFloat(); setTextColor(color)
-        if (bold) setTypeface(typeface, android.graphics.Typeface.BOLD)
-        setPadding(0, dp(5), 0, dp(7))
+    internal fun closeEditor() { draftKind = null; draftId = 0; draftError = ""; draft = Bundle(); editorIdentity = 0 }
+    internal fun updateDraft(key: String, value: String, expected: Long = draftGeneration) { guarded { store.withGeneration(expected) { draft = Bundle(draft).apply { putString(key, value) } } } }
+    internal fun openEditor(kind: String, id: Long = 0, initial: Bundle = Bundle()) {
+        if (UiBackupJobs.isRunning) { message("Espera a que termine la operación de respaldo."); return }
+        draftGeneration = store.generation; draftId = id; draft = initial; draftError = ""; draftKind = kind
+        editorIdentity = System.nanoTime()
     }
-    internal fun button(label: String, primary: Boolean = false, action: () -> Unit) = Button(this).apply {
-        val expectedGeneration = store.generation
-        text = label; isAllCaps = false; contentDescription = label
-        minHeight = dp(48)
-        setTextColor(if (primary) Color.WHITE else GREEN)
-        backgroundTintList = android.content.res.ColorStateList.valueOf(if (primary) LEAF else Color.rgb(233, 237, 226))
-        setOnClickListener {
-            if (UiBackupJobs.isRunning) message("Espera a que termine la operación de respaldo antes de hacer cambios.")
-            else guarded { store.withGeneration(expectedGeneration, action) }
-        }
+    internal fun write(expected: Long = model.state.value.generation, action: (BusinessStore) -> Unit, complete: () -> Unit = { render() }) {
+        if (UiBackupJobs.isRunning) { message("Espera a que termine la operación de respaldo."); return }
+        model.mutate(expected, action, complete, ::error)
     }
-    internal fun card(): LinearLayout = column().apply {
-        setPadding(dp(14), dp(10), dp(14), dp(12))
-        background = android.graphics.drawable.GradientDrawable().apply {
-            setColor(Color.WHITE); cornerRadius = dp(14).toFloat(); setStroke(dp(1), Color.rgb(229, 224, 213))
-        }
-        layoutParams = LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(12) }
-    }
-    internal fun title(heading: String, subtitle: String = "") {
-        body.addView(text(heading, 26, GREEN, true))
-        if (subtitle.isNotEmpty()) body.addView(text(subtitle, 15))
-    }
-    internal fun metric(parent: LinearLayout, label: String, cents: Long) {
-        parent.addView(text(label, 14))
-        parent.addView(text(Money.format(cents), 24, GREEN, true))
-    }
-    internal fun empty(heading: String, detail: String) {
-        body.addView(card().apply { addView(text(heading, 19, GREEN, true)); addView(text(detail, 15)) })
-    }
-    internal fun message(value: String) { Toast.makeText(this, value, Toast.LENGTH_LONG).show() }
-    internal fun guarded(action: () -> Unit) {
-        try { action() } catch (e: Exception) { error(e.message ?: "No se pudo completar la operación.") }
-    }
-    internal fun error(value: String) {
-        AlertDialog.Builder(this).setTitle("Revisa los datos").setMessage(value)
-            .setPositiveButton("Entendido", null).show()
-    }
-    internal fun confirm(heading: String, detail: String, label: String, action: () -> Unit) {
-        val expectedGeneration = store.generation
-        val created = AlertDialog.Builder(this).setTitle(heading).setMessage(detail).setNegativeButton("Volver", null)
-            .setPositiveButton(label) { _, _ -> guarded { store.withGeneration(expectedGeneration, action) } }.create()
-        transientDialogs.add(created)
-        created.setOnDismissListener { transientDialogs.remove(created) }
-        created.show()
-    }
-    internal fun statusLabel(status: OrderStatus): String = when (status) {
-        OrderStatus.PENDING -> "Pendiente"
-        OrderStatus.PREPARING -> "En preparación"
-        OrderStatus.DELIVERED -> "Entregado"
-        OrderStatus.CANCELLED -> "Cancelado"
-    }
-    internal fun dateLabel(iso: String): String = try {
-        LocalDate.parse(iso).format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"))
-    } catch (_: Exception) { iso }
-
-    companion object {
-        internal val CREAM = Color.rgb(255, 249, 238)
-        internal val GREEN = Color.rgb(23, 76, 60)
-        internal val LEAF = Color.rgb(40, 116, 90)
-        internal val INK = Color.rgb(44, 49, 41)
-        internal val CLAY = Color.rgb(150, 64, 38)
-    }
+    internal fun statusLabel(status: OrderStatus) = when(status) { OrderStatus.PENDING -> "Pendiente"; OrderStatus.PREPARING -> "En preparación"; OrderStatus.DELIVERED -> "Entregado"; OrderStatus.CANCELLED -> "Cancelado" }
+    internal fun dateLabel(iso: String): String = try { LocalDate.parse(iso).format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy")) } catch(_: Exception) { iso }
 }

@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "emulator": "emulator-5554",
+  "widePixels": "1600x1000",
+  "wideDensity": 160,
+  "phonePixels": "720x1280",
+  "phoneDensity": 320,
+  "shortLandscapePixels": "1280x720",
+  "allSevenWideDestinations": true,
+  "clientAndOrderListDetailVisible": true,
+  "unsavedDraftSurvivesResize": true,
+  "shortLandscapeSaveTappableThroughWindowManager": true,
+  "screenshots": [
+    "docs/capturas/compose/tableta-clientes.png",
+    "docs/capturas/compose/tableta-pedidos.png",
+    "docs/capturas/compose/telefono-formulario.png",
+    "docs/capturas/compose/telefono-horizontal-teclado.png"
+  ],
+  "records": "Synthetic customer saved on disposable emulator only"
+}

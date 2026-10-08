@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.tamalitos.malitos.ComposeReviewEditorIdentityTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-10-08T19:03:46" hostname="rudysfedora" time="8.727">
+  <properties/>
+  <testcase name="queuedSaveCompletionDoesNotCloseOrNavigateAwayFromReopenedEditor" classname="com.tamalitos.malitos.ComposeReviewEditorIdentityTest" time="8.727"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

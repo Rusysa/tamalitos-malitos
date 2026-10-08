@@ -1,0 +1,241 @@
+{
+  "command": "source tools/env.sh && ./gradlew :app:testDebugUnitTest :app:assembleDebug :app:assembleDebugAndroidTest :app:lintDebug --no-daemon --max-workers=1",
+  "log": "docs/verification-evidence/compose/review-full-green.log",
+  "totals": {
+    "tests": 123,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "suites": [
+    {
+      "file": "app/build/test-results/testDebugUnitTest/TEST-com.tamalitos.malitos.BackupTest.xml",
+      "name": "com.tamalitos.malitos.BackupTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "app/build/test-results/testDebugUnitTest/TEST-com.tamalitos.malitos.BoundaryAllocationTest.xml",
+      "name": "com.tamalitos.malitos.BoundaryAllocationTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "app/build/test-results/testDebugUnitTest/TEST-com.tamalitos.malitos.BusinessRulesTest.xml",
+      "name": "com.tamalitos.malitos.BusinessRulesTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "app/build/test-results/testDebugUnitTest/TEST-com.tamalitos.malitos.BusinessStoreTest.xml",
+      "name": "com.tamalitos.malitos.BusinessStoreTest",
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "app/build/test-results/testDebugUnitTest/TEST-com.tamalitos.malitos.ComposeAdaptiveTest.xml",
+      "name": "com.tamalitos.malitos.ComposeAdaptiveTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "app/build/test-results/testDebugUnitTest/TEST-com.tamalitos.malitos.ComposeMigrationTest.xml",
+      "name": "com.tamalitos.malitos.ComposeMigrationTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "app/build/test-results/testDebugUnitTest/TEST-com.tamalitos.malitos.ComposeRetentionTest.xml",
+      "name": "com.tamalitos.malitos.ComposeRetentionTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "app/build/test-results/testDebugUnitTest/TEST-com.tamalitos.malitos.ComposeReviewConcurrencyTest.xml",
+      "name": "com.tamalitos.malitos.ComposeReviewConcurrencyTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "app/build/test-results/testDebugUnitTest/TEST-com.tamalitos.malitos.ComposeReviewCustomerSearchTest.xml",
+      "name": "com.tamalitos.malitos.ComposeReviewCustomerSearchTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "app/build/test-results/testDebugUnitTest/TEST-com.tamalitos.malitos.ComposeReviewDriveConfirmationTest.xml",
+      "name": "com.tamalitos.malitos.ComposeReviewDriveConfirmationTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "app/build/test-results/testDebugUnitTest/TEST-com.tamalitos.malitos.ComposeReviewSafetyChoiceTest.xml",
+      "name": "com.tamalitos.malitos.ComposeReviewSafetyChoiceTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "app/build/test-results/testDebugUnitTest/TEST-com.tamalitos.malitos.DataModelsTest.xml",
+      "name": "com.tamalitos.malitos.DataModelsTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "app/build/test-results/testDebugUnitTest/TEST-com.tamalitos.malitos.DriveApiTest.xml",
+      "name": "com.tamalitos.malitos.DriveApiTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "app/build/test-results/testDebugUnitTest/TEST-com.tamalitos.malitos.DriveBackgroundTest.xml",
+      "name": "com.tamalitos.malitos.DriveBackgroundTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "app/build/test-results/testDebugUnitTest/TEST-com.tamalitos.malitos.DriveControllerTest.xml",
+      "name": "com.tamalitos.malitos.DriveControllerTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "app/build/test-results/testDebugUnitTest/TEST-com.tamalitos.malitos.DriveHttpsTransportTest.xml",
+      "name": "com.tamalitos.malitos.DriveHttpsTransportTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "app/build/test-results/testDebugUnitTest/TEST-com.tamalitos.malitos.DriveSnapshotTest.xml",
+      "name": "com.tamalitos.malitos.DriveSnapshotTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "app/build/test-results/testDebugUnitTest/TEST-com.tamalitos.malitos.DriveStateTest.xml",
+      "name": "com.tamalitos.malitos.DriveStateTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "app/build/test-results/testDebugUnitTest/TEST-com.tamalitos.malitos.ReviewDriveResetTest.xml",
+      "name": "com.tamalitos.malitos.ReviewDriveResetTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "app/build/test-results/testDebugUnitTest/TEST-com.tamalitos.malitos.ReviewEditorTest.xml",
+      "name": "com.tamalitos.malitos.ReviewEditorTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "app/build/test-results/testDebugUnitTest/TEST-com.tamalitos.malitos.ReviewGenerationTest.xml",
+      "name": "com.tamalitos.malitos.ReviewGenerationTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "app/build/test-results/testDebugUnitTest/TEST-com.tamalitos.malitos.ReviewIdLimitTest.xml",
+      "name": "com.tamalitos.malitos.ReviewIdLimitTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "app/build/test-results/testDebugUnitTest/TEST-com.tamalitos.malitos.ReviewReplacementTest.xml",
+      "name": "com.tamalitos.malitos.ReviewReplacementTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "app/build/test-results/testDebugUnitTest/TEST-com.tamalitos.malitos.ReviewSafetyRecoveryTest.xml",
+      "name": "com.tamalitos.malitos.ReviewSafetyRecoveryTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "app/build/test-results/testDebugUnitTest/TEST-com.tamalitos.malitos.UiActivityTest.xml",
+      "name": "com.tamalitos.malitos.UiActivityTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "app/build/test-results/testDebugUnitTest/TEST-com.tamalitos.malitos.UiBackupFilesTest.xml",
+      "name": "com.tamalitos.malitos.UiBackupFilesTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "app/build/test-results/testDebugUnitTest/TEST-com.tamalitos.malitos.UiPeriodTest.xml",
+      "name": "com.tamalitos.malitos.UiPeriodTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "app/build/test-results/testDebugUnitTest/TEST-com.tamalitos.malitos.UiWorkflowTest.xml",
+      "name": "com.tamalitos.malitos.UiWorkflowTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "lint": {
+    "errors": 0,
+    "warnings": 29
+  },
+  "instrumentation_run": false
+}

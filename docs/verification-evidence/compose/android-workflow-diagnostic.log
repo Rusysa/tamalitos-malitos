@@ -1,0 +1,401 @@
+INSTRUMENTATION_STATUS: class=com.tamalitos.malitos.NativeWorkflowInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+com.tamalitos.malitos.NativeWorkflowInstrumentedTest:
+INSTRUMENTATION_STATUS: test=registerCustomerEditOrderHalfThenLiquidateAndRegisterExpenseThroughScreens
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.tamalitos.malitos.NativeWorkflowInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Editor must open after a real tap; draft=null, problem=null
+Printing with useUnmergedTree = 'false'
+Node #1 at (l=0.0, t=48.0, r=720.0, b=1184.0)px
+ |-Node #5 at (l=0.0, t=48.0, r=720.0, b=1184.0)px
+   IsContainer = 'true'
+    |-Node #62 at (l=0.0, t=176.0, r=720.0, b=1024.0)px, Tag: 'detail-pane'
+    |  |-Node #177 at (l=0.0, t=176.0, r=720.0, b=1024.0)px
+    |    IsTraversalGroup = 'true'
+    |    VerticalScrollAxisRange = 'ScrollAxisRange(value=288.0, maxValue=744.0, reverseScrolling=false)'
+    |    Actions = [ScrollBy, ScrollByOffset]
+    |     |-Node #178 at (l=40.0, t=-72.0, r=680.0, b=72.0)px
+    |     | Text = '[Cliente QA 234719130520]'
+    |     | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |     |-Node #179 at (l=40.0, t=96.0, r=492.0, b=136.0)px
+    |     | Text = '[Datos de contacto, pedidos y cuenta]'
+    |     | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |     |-Node #180 at (l=40.0, t=160.0, r=373.0, b=256.0)px
+    |     | Focused = 'false'
+    |     | Role = 'Button'
+    |     | Text = '[Volver al directorio]'
+    |     | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+    |     | MergeDescendants = 'true'
+    |     |-Node #183 at (l=40.0, t=280.0, r=680.0, b=520.0)px
+    |     | IsContainer = 'true'
+    |     |  |-Node #186 at (l=72.0, t=312.0, r=413.0, b=360.0)px
+    |     |  | Text = '[Teléfono: 5551234567]'
+    |     |  | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |     |  |-Node #187 at (l=72.0, t=376.0, r=422.0, b=424.0)px
+    |     |  | Text = '[Dirección: Mercado QA]'
+    |     |  | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |     |  |-Node #188 at (l=72.0, t=440.0, r=72.0, b=488.0)px
+    |     |    Text = '[]'
+    |     |    Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |     |-Node #189 at (l=40.0, t=544.0, r=314.0, b=712.0)px
+    |     | IsContainer = 'true'
+    |     |  |-Node #192 at (l=72.0, t=576.0, r=282.0, b=616.0)px
+    |     |  | Text = '[Saldo por cobrar]'
+    |     |  | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |     |  |-Node #193 at (l=72.0, t=616.0, r=193.0, b=680.0)px
+    |     |    Text = '[$0.00]'
+    |     |    Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |     |-Node #194 at (l=40.0, t=736.0, r=371.0, b=784.0)px
+    |     | Text = '[0 pedidos registrados]'
+    |     | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |     |-Node #195 at (l=40.0, t=808.0, r=525.0, b=904.0)px
+    |     | Focused = 'false'
+    |     | Role = 'Button'
+    |     | Text = '[Nuevo pedido para este cliente]'
+    |     | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+    |     | MergeDescendants = 'true'
+    |     |-Node #198 at (l=40.0, t=928.0, r=301.0, b=1024.0)px
+    |     | Focused = 'false'
+    |     | Role = 'Button'
+    |     | Text = '[Editar cliente]'
+    |     | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+    |     | MergeDescendants = 'true'
+    |     |-Node #201 at (l=40.0, t=1048.0, r=330.0, b=1144.0)px
+    |     | Focused = 'false'
+    |     | Role = 'Button'
+    |     | Text = '[Eliminar cliente]'
+    |     | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+    |     | MergeDescendants = 'true'
+    |     |-Node #204 at (l=40.0, t=1168.0, r=539.0, b=1240.0)px
+    |     | Text = '[Historial de pedidos]'
+    |     | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |     |-Node #205 at (l=40.0, t=1264.0, r=680.0, b=1440.0)px
+    |       IsContainer = 'true'
+    |        |-Node #208 at (l=72.0, t=1296.0, r=240.0, b=1344.0)px
+    |        | Text = '[Sin pedidos]'
+    |        | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |        |-Node #209 at (l=72.0, t=1360.0, r=571.0, b=1408.0)px
+    |          Text = '[Crea un pedido para este cliente.]'
+    |          Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |-Node #8 at (l=0.0, t=48.0, r=720.0, b=176.0)px
+    | IsContainer = 'true'
+    |  |-Node #13 at (l=32.0, t=68.0, r=384.0, b=124.0)px
+    |  | Text = '[Tamalitos Malitos]'
+    |  | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |  |-Node #14 at (l=32.0, t=124.0, r=128.0, b=156.0)px
+    |    Text = '[Clientes]'
+    |    Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |-Node #210 at (l=0.0, t=880.0, r=720.0, b=1024.0)px
+    | LiveRegion = 'Polite'
+    | Actions = [Dismiss]
+    |  |-Node #211 at (l=24.0, t=904.0, r=696.0, b=1000.0)px
+    |    IsContainer = 'true'
+    |     |-Node #214 at (l=56.0, t=932.0, r=292.0, b=972.0)px
+    |       Text = '[Registro guardado.]'
+    |       Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |-Node #21 at (l=0.0, t=1024.0, r=720.0, b=1184.0)px, Tag: 'navigation-bottom'
+      IsContainer = 'true'
+       |-Node #22 at (l=0.0, t=1024.0, r=720.0, b=1184.0)px
+         [SelectableGroup]
+          |-Node #23 at (l=0.0, t=1024.0, r=168.0, b=1184.0)px
+          | Focused = 'false'
+          | Role = 'Tab'
+          | Selected = 'false'
+          | Text = '[Inicio]'
+          | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+          | MergeDescendants = 'true'
+          |-Node #32 at (l=184.0, t=1024.0, r=352.0, b=1184.0)px
+          | Focused = 'false'
+          | Role = 'Tab'
+          | Selected = 'true'
+          | Text = '[Clientes]'
+          | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+          | MergeDescendants = 'true'
+          |-Node #41 at (l=368.0, t=1024.0, r=536.0, b=1184.0)px
+          | Focused = 'false'
+          | Role = 'Tab'
+          | Selected = 'false'
+          | Text = '[Pedidos]'
+          | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+          | MergeDescendants = 'true'
+          |-Node #50 at (l=552.0, t=1024.0, r=720.0, b=1184.0)px
+            Focused = 'false'
+            Role = 'Tab'
+            Selected = 'false'
+            Text = '[Más]'
+            Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+            MergeDescendants = 'true'
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.tamalitos.malitos.NativeWorkflowInstrumentedTest.registerCustomerEditOrderHalfThenLiquidateAndRegisterExpenseThroughScreens(NativeWorkflowInstrumentedTest.kt:22)
+
+INSTRUMENTATION_STATUS: stream=
+Error in registerCustomerEditOrderHalfThenLiquidateAndRegisterExpenseThroughScreens(com.tamalitos.malitos.NativeWorkflowInstrumentedTest):
+java.lang.AssertionError: Editor must open after a real tap; draft=null, problem=null
+Printing with useUnmergedTree = 'false'
+Node #1 at (l=0.0, t=48.0, r=720.0, b=1184.0)px
+ |-Node #5 at (l=0.0, t=48.0, r=720.0, b=1184.0)px
+   IsContainer = 'true'
+    |-Node #62 at (l=0.0, t=176.0, r=720.0, b=1024.0)px, Tag: 'detail-pane'
+    |  |-Node #177 at (l=0.0, t=176.0, r=720.0, b=1024.0)px
+    |    IsTraversalGroup = 'true'
+    |    VerticalScrollAxisRange = 'ScrollAxisRange(value=288.0, maxValue=744.0, reverseScrolling=false)'
+    |    Actions = [ScrollBy, ScrollByOffset]
+    |     |-Node #178 at (l=40.0, t=-72.0, r=680.0, b=72.0)px
+    |     | Text = '[Cliente QA 234719130520]'
+    |     | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |     |-Node #179 at (l=40.0, t=96.0, r=492.0, b=136.0)px
+    |     | Text = '[Datos de contacto, pedidos y cuenta]'
+    |     | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |     |-Node #180 at (l=40.0, t=160.0, r=373.0, b=256.0)px
+    |     | Focused = 'false'
+    |     | Role = 'Button'
+    |     | Text = '[Volver al directorio]'
+    |     | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+    |     | MergeDescendants = 'true'
+    |     |-Node #183 at (l=40.0, t=280.0, r=680.0, b=520.0)px
+    |     | IsContainer = 'true'
+    |     |  |-Node #186 at (l=72.0, t=312.0, r=413.0, b=360.0)px
+    |     |  | Text = '[Teléfono: 5551234567]'
+    |     |  | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |     |  |-Node #187 at (l=72.0, t=376.0, r=422.0, b=424.0)px
+    |     |  | Text = '[Dirección: Mercado QA]'
+    |     |  | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |     |  |-Node #188 at (l=72.0, t=440.0, r=72.0, b=488.0)px
+    |     |    Text = '[]'
+    |     |    Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |     |-Node #189 at (l=40.0, t=544.0, r=314.0, b=712.0)px
+    |     | IsContainer = 'true'
+    |     |  |-Node #192 at (l=72.0, t=576.0, r=282.0, b=616.0)px
+    |     |  | Text = '[Saldo por cobrar]'
+    |     |  | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |     |  |-Node #193 at (l=72.0, t=616.0, r=193.0, b=680.0)px
+    |     |    Text = '[$0.00]'
+    |     |    Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |     |-Node #194 at (l=40.0, t=736.0, r=371.0, b=784.0)px
+    |     | Text = '[0 pedidos registrados]'
+    |     | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |     |-Node #195 at (l=40.0, t=808.0, r=525.0, b=904.0)px
+    |     | Focused = 'false'
+    |     | Role = 'Button'
+    |     | Text = '[Nuevo pedido para este cliente]'
+    |     | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+    |     | MergeDescendants = 'true'
+    |     |-Node #198 at (l=40.0, t=928.0, r=301.0, b=1024.0)px
+    |     | Focused = 'false'
+    |     | Role = 'Button'
+    |     | Text = '[Editar cliente]'
+    |     | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+    |     | MergeDescendants = 'true'
+    |     |-Node #201 at (l=40.0, t=1048.0, r=330.0, b=1144.0)px
+    |     | Focused = 'false'
+    |     | Role = 'Button'
+    |     | Text = '[Eliminar cliente]'
+    |     | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+    |     | MergeDescendants = 'true'
+    |     |-Node #204 at (l=40.0, t=1168.0, r=539.0, b=1240.0)px
+    |     | Text = '[Historial de pedidos]'
+    |     | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |     |-Node #205 at (l=40.0, t=1264.0, r=680.0, b=1440.0)px
+    |       IsContainer = 'true'
+    |        |-Node #208 at (l=72.0, t=1296.0, r=240.0, b=1344.0)px
+    |        | Text = '[Sin pedidos]'
+    |        | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |        |-Node #209 at (l=72.0, t=1360.0, r=571.0, b=1408.0)px
+    |          Text = '[Crea un pedido para este cliente.]'
+    |          Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |-Node #8 at (l=0.0, t=48.0, r=720.0, b=176.0)px
+    | IsContainer = 'true'
+    |  |-Node #13 at (l=32.0, t=68.0, r=384.0, b=124.0)px
+    |  | Text = '[Tamalitos Malitos]'
+    |  | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |  |-Node #14 at (l=32.0, t=124.0, r=128.0, b=156.0)px
+    |    Text = '[Clientes]'
+    |    Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |-Node #210 at (l=0.0, t=880.0, r=720.0, b=1024.0)px
+    | LiveRegion = 'Polite'
+    | Actions = [Dismiss]
+    |  |-Node #211 at (l=24.0, t=904.0, r=696.0, b=1000.0)px
+    |    IsContainer = 'true'
+    |     |-Node #214 at (l=56.0, t=932.0, r=292.0, b=972.0)px
+    |       Text = '[Registro guardado.]'
+    |       Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |-Node #21 at (l=0.0, t=1024.0, r=720.0, b=1184.0)px, Tag: 'navigation-bottom'
+      IsContainer = 'true'
+       |-Node #22 at (l=0.0, t=1024.0, r=720.0, b=1184.0)px
+         [SelectableGroup]
+          |-Node #23 at (l=0.0, t=1024.0, r=168.0, b=1184.0)px
+          | Focused = 'false'
+          | Role = 'Tab'
+          | Selected = 'false'
+          | Text = '[Inicio]'
+          | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+          | MergeDescendants = 'true'
+          |-Node #32 at (l=184.0, t=1024.0, r=352.0, b=1184.0)px
+          | Focused = 'false'
+          | Role = 'Tab'
+          | Selected = 'true'
+          | Text = '[Clientes]'
+          | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+          | MergeDescendants = 'true'
+          |-Node #41 at (l=368.0, t=1024.0, r=536.0, b=1184.0)px
+          | Focused = 'false'
+          | Role = 'Tab'
+          | Selected = 'false'
+          | Text = '[Pedidos]'
+          | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+          | MergeDescendants = 'true'
+          |-Node #50 at (l=552.0, t=1024.0, r=720.0, b=1184.0)px
+            Focused = 'false'
+            Role = 'Tab'
+            Selected = 'false'
+            Text = '[Más]'
+            Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+            MergeDescendants = 'true'
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.tamalitos.malitos.NativeWorkflowInstrumentedTest.registerCustomerEditOrderHalfThenLiquidateAndRegisterExpenseThroughScreens(NativeWorkflowInstrumentedTest.kt:22)
+
+INSTRUMENTATION_STATUS: test=registerCustomerEditOrderHalfThenLiquidateAndRegisterExpenseThroughScreens
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 5.762
+There was 1 failure:
+1) registerCustomerEditOrderHalfThenLiquidateAndRegisterExpenseThroughScreens(com.tamalitos.malitos.NativeWorkflowInstrumentedTest)
+java.lang.AssertionError: Editor must open after a real tap; draft=null, problem=null
+Printing with useUnmergedTree = 'false'
+Node #1 at (l=0.0, t=48.0, r=720.0, b=1184.0)px
+ |-Node #5 at (l=0.0, t=48.0, r=720.0, b=1184.0)px
+   IsContainer = 'true'
+    |-Node #62 at (l=0.0, t=176.0, r=720.0, b=1024.0)px, Tag: 'detail-pane'
+    |  |-Node #177 at (l=0.0, t=176.0, r=720.0, b=1024.0)px
+    |    IsTraversalGroup = 'true'
+    |    VerticalScrollAxisRange = 'ScrollAxisRange(value=288.0, maxValue=744.0, reverseScrolling=false)'
+    |    Actions = [ScrollBy, ScrollByOffset]
+    |     |-Node #178 at (l=40.0, t=-72.0, r=680.0, b=72.0)px
+    |     | Text = '[Cliente QA 234719130520]'
+    |     | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |     |-Node #179 at (l=40.0, t=96.0, r=492.0, b=136.0)px
+    |     | Text = '[Datos de contacto, pedidos y cuenta]'
+    |     | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |     |-Node #180 at (l=40.0, t=160.0, r=373.0, b=256.0)px
+    |     | Focused = 'false'
+    |     | Role = 'Button'
+    |     | Text = '[Volver al directorio]'
+    |     | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+    |     | MergeDescendants = 'true'
+    |     |-Node #183 at (l=40.0, t=280.0, r=680.0, b=520.0)px
+    |     | IsContainer = 'true'
+    |     |  |-Node #186 at (l=72.0, t=312.0, r=413.0, b=360.0)px
+    |     |  | Text = '[Teléfono: 5551234567]'
+    |     |  | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |     |  |-Node #187 at (l=72.0, t=376.0, r=422.0, b=424.0)px
+    |     |  | Text = '[Dirección: Mercado QA]'
+    |     |  | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |     |  |-Node #188 at (l=72.0, t=440.0, r=72.0, b=488.0)px
+    |     |    Text = '[]'
+    |     |    Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |     |-Node #189 at (l=40.0, t=544.0, r=314.0, b=712.0)px
+    |     | IsContainer = 'true'
+    |     |  |-Node #192 at (l=72.0, t=576.0, r=282.0, b=616.0)px
+    |     |  | Text = '[Saldo por cobrar]'
+    |     |  | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |     |  |-Node #193 at (l=72.0, t=616.0, r=193.0, b=680.0)px
+    |     |    Text = '[$0.00]'
+    |     |    Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |     |-Node #194 at (l=40.0, t=736.0, r=371.0, b=784.0)px
+    |     | Text = '[0 pedidos registrados]'
+    |     | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |     |-Node #195 at (l=40.0, t=808.0, r=525.0, b=904.0)px
+    |     | Focused = 'false'
+    |     | Role = 'Button'
+    |     | Text = '[Nuevo pedido para este cliente]'
+    |     | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+    |     | MergeDescendants = 'true'
+    |     |-Node #198 at (l=40.0, t=928.0, r=301.0, b=1024.0)px
+    |     | Focused = 'false'
+    |     | Role = 'Button'
+    |     | Text = '[Editar cliente]'
+    |     | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+    |     | MergeDescendants = 'true'
+    |     |-Node #201 at (l=40.0, t=1048.0, r=330.0, b=1144.0)px
+    |     | Focused = 'false'
+    |     | Role = 'Button'
+    |     | Text = '[Eliminar cliente]'
+    |     | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+    |     | MergeDescendants = 'true'
+    |     |-Node #204 at (l=40.0, t=1168.0, r=539.0, b=1240.0)px
+    |     | Text = '[Historial de pedidos]'
+    |     | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |     |-Node #205 at (l=40.0, t=1264.0, r=680.0, b=1440.0)px
+    |       IsContainer = 'true'
+    |        |-Node #208 at (l=72.0, t=1296.0, r=240.0, b=1344.0)px
+    |        | Text = '[Sin pedidos]'
+    |        | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |        |-Node #209 at (l=72.0, t=1360.0, r=571.0, b=1408.0)px
+    |          Text = '[Crea un pedido para este cliente.]'
+    |          Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |-Node #8 at (l=0.0, t=48.0, r=720.0, b=176.0)px
+    | IsContainer = 'true'
+    |  |-Node #13 at (l=32.0, t=68.0, r=384.0, b=124.0)px
+    |  | Text = '[Tamalitos Malitos]'
+    |  | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |  |-Node #14 at (l=32.0, t=124.0, r=128.0, b=156.0)px
+    |    Text = '[Clientes]'
+    |    Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |-Node #210 at (l=0.0, t=880.0, r=720.0, b=1024.0)px
+    | LiveRegion = 'Polite'
+    | Actions = [Dismiss]
+    |  |-Node #211 at (l=24.0, t=904.0, r=696.0, b=1000.0)px
+    |    IsContainer = 'true'
+    |     |-Node #214 at (l=56.0, t=932.0, r=292.0, b=972.0)px
+    |       Text = '[Registro guardado.]'
+    |       Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+    |-Node #21 at (l=0.0, t=1024.0, r=720.0, b=1184.0)px, Tag: 'navigation-bottom'
+      IsContainer = 'true'
+       |-Node #22 at (l=0.0, t=1024.0, r=720.0, b=1184.0)px
+         [SelectableGroup]
+          |-Node #23 at (l=0.0, t=1024.0, r=168.0, b=1184.0)px
+          | Focused = 'false'
+          | Role = 'Tab'
+          | Selected = 'false'
+          | Text = '[Inicio]'
+          | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+          | MergeDescendants = 'true'
+          |-Node #32 at (l=184.0, t=1024.0, r=352.0, b=1184.0)px
+          | Focused = 'false'
+          | Role = 'Tab'
+          | Selected = 'true'
+          | Text = '[Clientes]'
+          | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+          | MergeDescendants = 'true'
+          |-Node #41 at (l=368.0, t=1024.0, r=536.0, b=1184.0)px
+          | Focused = 'false'
+          | Role = 'Tab'
+          | Selected = 'false'
+          | Text = '[Pedidos]'
+          | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+          | MergeDescendants = 'true'
+          |-Node #50 at (l=552.0, t=1024.0, r=720.0, b=1184.0)px
+            Focused = 'false'
+            Role = 'Tab'
+            Selected = 'false'
+            Text = '[Más]'
+            Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+            MergeDescendants = 'true'
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.tamalitos.malitos.NativeWorkflowInstrumentedTest.registerCustomerEditOrderHalfThenLiquidateAndRegisterExpenseThroughScreens(NativeWorkflowInstrumentedTest.kt:22)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

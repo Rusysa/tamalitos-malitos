@@ -1,0 +1,44 @@
+INSTRUMENTATION_STATUS: class=com.tamalitos.malitos.ComposeAdaptiveInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+com.tamalitos.malitos.ComposeAdaptiveInstrumentedTest:
+INSTRUMENTATION_STATUS: test=actualWideWindowShowsClientAndOrderListsBesideDetails
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.tamalitos.malitos.ComposeAdaptiveInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Unused space below the rail must use the Material background, not the black window expected:<Color(1.0, 0.9764706, 0.93333334, 1.0, sRGB IEC61966-2.1)> but was:<Color(0.0, 0.0, 0.0, 0.0, sRGB IEC61966-2.1)>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at com.tamalitos.malitos.ComposeAdaptiveInstrumentedTest.actualWideWindowShowsClientAndOrderListsBesideDetails(ComposeAdaptiveInstrumentedTest.kt:64)
+
+INSTRUMENTATION_STATUS: stream=
+Error in actualWideWindowShowsClientAndOrderListsBesideDetails(com.tamalitos.malitos.ComposeAdaptiveInstrumentedTest):
+java.lang.AssertionError: Unused space below the rail must use the Material background, not the black window expected:<Color(1.0, 0.9764706, 0.93333334, 1.0, sRGB IEC61966-2.1)> but was:<Color(0.0, 0.0, 0.0, 0.0, sRGB IEC61966-2.1)>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at com.tamalitos.malitos.ComposeAdaptiveInstrumentedTest.actualWideWindowShowsClientAndOrderListsBesideDetails(ComposeAdaptiveInstrumentedTest.kt:64)
+
+INSTRUMENTATION_STATUS: test=actualWideWindowShowsClientAndOrderListsBesideDetails
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 4.116
+There was 1 failure:
+1) actualWideWindowShowsClientAndOrderListsBesideDetails(com.tamalitos.malitos.ComposeAdaptiveInstrumentedTest)
+java.lang.AssertionError: Unused space below the rail must use the Material background, not the black window expected:<Color(1.0, 0.9764706, 0.93333334, 1.0, sRGB IEC61966-2.1)> but was:<Color(0.0, 0.0, 0.0, 0.0, sRGB IEC61966-2.1)>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at com.tamalitos.malitos.ComposeAdaptiveInstrumentedTest.actualWideWindowShowsClientAndOrderListsBesideDetails(ComposeAdaptiveInstrumentedTest.kt:64)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

@@ -1,0 +1,176 @@
+INSTRUMENTATION_STATUS: class=com.tamalitos.malitos.BusinessFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+com.tamalitos.malitos.BusinessFlowInstrumentedTest:
+INSTRUMENTATION_STATUS: test=customerHalfPaymentInstallmentExpenseAndReopenPersistCorrectly
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.tamalitos.malitos.BusinessFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=customerHalfPaymentInstallmentExpenseAndReopenPersistCorrectly
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.tamalitos.malitos.BusinessFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=unpaidOrderRemainsDebtAfterDelivery
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.tamalitos.malitos.BusinessFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=unpaidOrderRemainsDebtAfterDelivery
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.tamalitos.malitos.ComposeAdaptiveInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+com.tamalitos.malitos.ComposeAdaptiveInstrumentedTest:
+INSTRUMENTATION_STATUS: test=actualWideWindowShowsClientAndOrderListsBesideDetails
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.tamalitos.malitos.ComposeAdaptiveInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=actualWideWindowShowsClientAndOrderListsBesideDetails
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.tamalitos.malitos.ComposeAdaptiveInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=saveCanActuallyBeTappedWithKeyboardInShortLandscapeWindow
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.tamalitos.malitos.ComposeAdaptiveInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=saveCanActuallyBeTappedWithKeyboardInShortLandscapeWindow
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.tamalitos.malitos.NativeWorkflowInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+com.tamalitos.malitos.NativeWorkflowInstrumentedTest:
+INSTRUMENTATION_STATUS: test=unsavedMultiLineDraftSurvivesActivityRecreation
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.tamalitos.malitos.NativeWorkflowInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=unsavedMultiLineDraftSurvivesActivityRecreation
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.tamalitos.malitos.NativeWorkflowInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=registerCustomerEditOrderHalfThenLiquidateAndRegisterExpenseThroughScreens
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.tamalitos.malitos.NativeWorkflowInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Failed to inject touch input.
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (TestTag = 'Estado del pedido')
+Nodes found:
+1) Node #2336 at (l=100.0, t=332.0, r=698.0, b=380.0)px, Tag: 'Estado del pedido'
+Focused = 'false'
+Role = 'Button'
+Text = '[Todos]'
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+MergeDescendants = 'true'
+Has 8 siblings
+2) Node #2452 at (l=540.0, t=139.0, r=1060.0, b=187.0)px, Tag: 'Estado del pedido'
+Focused = 'false'
+Role = 'Button'
+Text = '[Pendiente]'
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+MergeDescendants = 'true'
+Has 1 sibling
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:389)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at com.tamalitos.malitos.NativeWorkflowInstrumentedTest.registerCustomerEditOrderHalfThenLiquidateAndRegisterExpenseThroughScreens(NativeWorkflowInstrumentedTest.kt:38)
+
+INSTRUMENTATION_STATUS: stream=
+Error in registerCustomerEditOrderHalfThenLiquidateAndRegisterExpenseThroughScreens(com.tamalitos.malitos.NativeWorkflowInstrumentedTest):
+java.lang.AssertionError: Failed to inject touch input.
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (TestTag = 'Estado del pedido')
+Nodes found:
+1) Node #2336 at (l=100.0, t=332.0, r=698.0, b=380.0)px, Tag: 'Estado del pedido'
+Focused = 'false'
+Role = 'Button'
+Text = '[Todos]'
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+MergeDescendants = 'true'
+Has 8 siblings
+2) Node #2452 at (l=540.0, t=139.0, r=1060.0, b=187.0)px, Tag: 'Estado del pedido'
+Focused = 'false'
+Role = 'Button'
+Text = '[Pendiente]'
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+MergeDescendants = 'true'
+Has 1 sibling
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:389)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at com.tamalitos.malitos.NativeWorkflowInstrumentedTest.registerCustomerEditOrderHalfThenLiquidateAndRegisterExpenseThroughScreens(NativeWorkflowInstrumentedTest.kt:38)
+
+INSTRUMENTATION_STATUS: test=registerCustomerEditOrderHalfThenLiquidateAndRegisterExpenseThroughScreens
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 51.317
+There was 1 failure:
+1) registerCustomerEditOrderHalfThenLiquidateAndRegisterExpenseThroughScreens(com.tamalitos.malitos.NativeWorkflowInstrumentedTest)
+java.lang.AssertionError: Failed to inject touch input.
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (TestTag = 'Estado del pedido')
+Nodes found:
+1) Node #2336 at (l=100.0, t=332.0, r=698.0, b=380.0)px, Tag: 'Estado del pedido'
+Focused = 'false'
+Role = 'Button'
+Text = '[Todos]'
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+MergeDescendants = 'true'
+Has 8 siblings
+2) Node #2452 at (l=540.0, t=139.0, r=1060.0, b=187.0)px, Tag: 'Estado del pedido'
+Focused = 'false'
+Role = 'Button'
+Text = '[Pendiente]'
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+MergeDescendants = 'true'
+Has 1 sibling
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:389)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at com.tamalitos.malitos.NativeWorkflowInstrumentedTest.registerCustomerEditOrderHalfThenLiquidateAndRegisterExpenseThroughScreens(NativeWorkflowInstrumentedTest.kt:38)
+
+FAILURES!!!
+Tests run: 6,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

@@ -1,0 +1,56 @@
+INSTRUMENTATION_STATUS: class=com.tamalitos.malitos.NativeWorkflowInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+com.tamalitos.malitos.NativeWorkflowInstrumentedTest:
+INSTRUMENTATION_STATUS: test=registerCustomerEditOrderHalfThenLiquidateAndRegisterExpenseThroughScreens
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.tamalitos.malitos.NativeWorkflowInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Action performScrollTo() failed.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (TestTag = 'notes')
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+	at com.tamalitos.malitos.NativeWorkflowInstrumentedTest.fill(NativeWorkflowInstrumentedTest.kt:16)
+	at com.tamalitos.malitos.NativeWorkflowInstrumentedTest.registerCustomerEditOrderHalfThenLiquidateAndRegisterExpenseThroughScreens(NativeWorkflowInstrumentedTest.kt:21)
+
+INSTRUMENTATION_STATUS: stream=
+Error in registerCustomerEditOrderHalfThenLiquidateAndRegisterExpenseThroughScreens(com.tamalitos.malitos.NativeWorkflowInstrumentedTest):
+java.lang.AssertionError: Action performScrollTo() failed.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (TestTag = 'notes')
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+	at com.tamalitos.malitos.NativeWorkflowInstrumentedTest.fill(NativeWorkflowInstrumentedTest.kt:16)
+	at com.tamalitos.malitos.NativeWorkflowInstrumentedTest.registerCustomerEditOrderHalfThenLiquidateAndRegisterExpenseThroughScreens(NativeWorkflowInstrumentedTest.kt:21)
+
+INSTRUMENTATION_STATUS: test=registerCustomerEditOrderHalfThenLiquidateAndRegisterExpenseThroughScreens
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 6.506
+There was 1 failure:
+1) registerCustomerEditOrderHalfThenLiquidateAndRegisterExpenseThroughScreens(com.tamalitos.malitos.NativeWorkflowInstrumentedTest)
+java.lang.AssertionError: Action performScrollTo() failed.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (TestTag = 'notes')
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+	at com.tamalitos.malitos.NativeWorkflowInstrumentedTest.fill(NativeWorkflowInstrumentedTest.kt:16)
+	at com.tamalitos.malitos.NativeWorkflowInstrumentedTest.registerCustomerEditOrderHalfThenLiquidateAndRegisterExpenseThroughScreens(NativeWorkflowInstrumentedTest.kt:21)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

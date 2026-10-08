@@ -11,12 +11,18 @@
 
 El resumen muestra ventas registradas, dinero efectivamente cobrado, gastos, saldo por cobrar y flujo de efectivo **de todo el historial**. También permite crear un pedido, registrar un gasto o agregar un cliente y consultar las próximas cinco entregas pendientes.
 
-Usa la barra horizontal superior para abrir **Inicio, Clientes, Pedidos, Gastos, Informes, Productos y Respaldo**. Deslízala si no caben todas las opciones. El botón Atrás regresa del detalle a su lista; desde una sección vuelve a Inicio.
+La interfaz usa **Jetpack Compose y Material 3**, con colores verde/crema/terracota, modo oscuro y colores dinámicos de Android 12 o posterior.
+
+- En teléfono (ancho disponible menor de 600 dp), la barra inferior muestra **Inicio, Clientes, Pedidos y Más**. **Más** abre Gastos, Informes, Productos y Respaldo.
+- Desde 600 dp aparece una **barra lateral** con las siete secciones; se puede desplazar en ventanas bajas.
+- Desde 840 dp, **Clientes y Pedidos muestran lista y detalle simultáneamente**. La selección se mantiene al cambiar tamaño o girar. Se usa el ancho real de la ventana: también funciona en pantalla dividida, sin bloquear orientación.
+- Los indicadores se distribuyen en tarjetas adaptables. Los formularios tienen ancho máximo, desplazamiento y espacio para el teclado; no es necesario completar un formulario horizontalmente.
+- **Atrás** cierra primero el formulario, luego el detalle; desde una sección vuelve a Inicio.
 
 ## Clientes
 
 1. En **Clientes → Agregar cliente**, escribe el nombre. Teléfono, dirección habitual y notas son opcionales.
-2. Busca por nombre o teléfono. La lista se actualiza mientras escribes, sin eliminar lo que estás buscando.
+2. Busca por nombre, teléfono, dirección o notas. La lista se actualiza mientras escribes, sin eliminar lo que estás buscando.
 3. Abre **Ver cliente** para ver contacto, dirección, notas, pedidos e importe pendiente de cobro.
 4. **Nuevo pedido para este cliente** lo selecciona directamente en el formulario.
 5. **Editar cliente** cambia sus datos sin borrar el historial.
@@ -28,9 +34,9 @@ Necesitas al menos un cliente. Si no hay ninguno, la aplicación te ofrece agreg
 
 1. Abre **Pedidos → Nuevo pedido** o usa el acceso en Inicio.
 2. Selecciona el cliente. La dirección habitual se propone como punto de entrega; puedes cambiarla sin modificar el directorio.
-3. Elige la fecha con el calendario y escribe la dirección de entrega o el punto de encuentro. Agrega notas si hace falta.
+3. Escribe la fecha en formato `AAAA-MM-DD` o pulsa **Elegir fecha en calendario** (selector Material 3). Escribe la dirección de entrega o el punto de encuentro. Agrega notas si hace falta.
 4. Cada artículo puede ser **personalizado** o del **catálogo**. Seleccionar un producto propone su nombre y precio. Revisa descripción, cantidad entera mayor que cero y precio unitario mayor que cero.
-5. Usa **Agregar otro artículo** para combinar varios productos o **Quitar este artículo** para retirarlo. Se admiten hasta 100 renglones por formulario.
+5. Usa **Agregar otro artículo** para combinar varios productos o **Quitar artículo N** para retirarlo. Se admiten hasta 100 renglones por formulario.
 6. Selecciona el anticipo:
    - **Pago completo**: registra el total como pago inicial.
    - **La mitad (50 %)**: registra la mitad; cuando sobra un centavo, redondea el anticipo hacia arriba.
@@ -52,7 +58,7 @@ Los artículos de catálogo con stock controlado reservan/descuentan existencias
 
 ## Gastos
 
-En **Gastos → Registrar gasto**, captura concepto, importe positivo, categoría y fecha. El selector ofrece categorías frecuentes, pero también puedes escribir una propia. Las notas son opcionales.
+En **Gastos → Registrar gasto**, captura concepto, importe positivo, categoría y fecha. El selector **Categorías frecuentes** ofrece opciones, pero también puedes escribir una categoría propia. Las notas son opcionales.
 
 Cada registro ofrece **Editar gasto** y **Eliminar gasto**. La eliminación pide confirmación, no puede deshacerse y cambia el informe correspondiente.
 
@@ -120,20 +126,19 @@ Sin configurar Google Cloud, sin internet, ante una autorización rechazada o un
 
 ## Rotación y límites
 
-Se conservan la sección, detalle abierto, búsqueda de clientes/pedidos, estado filtrado, periodos aplicados, posición de desplazamiento y borradores de los formularios principales al recrear la Activity. Los borradores incluyen múltiples artículos y anticipo. La confirmación de importación local también se recupera. El trabajo local de respaldo usa un ejecutor independiente de la Activity y no conserva referencias fuertes a una pantalla destruida.
+La sección, selección, búsquedas, filtros, periodos y borradores pertenecen a un **ViewModel retenido**. Al girar el dispositivo se conserva incluso un guardado en curso: termina en segundo plano, cierra el editor y selecciona el registro guardado en la nueva pantalla. Los datos SQLite se cargan fuera de la composición mediante un repositorio con contexto de aplicación y se observan con `collectAsStateWithLifecycle`.
 
-Los borradores y confirmaciones quedan vinculados a la generación de datos que los abrió: después de una restauración no pueden guardar, abonar ni borrar registros con IDs reutilizados. Los borradores de una generación anterior se descartan al recrear la pantalla; un proceso nuevo también los invalida por seguridad. Los cambios no guardados no sobreviven a un cierre forzado o a descartar el formulario. Los diálogos de calendario/confirmación de eliminación y el estado aún no aplicado del selector de periodo pueden necesitar abrirse de nuevo tras una rotación. Verifica el reloj del dispositivo: determina la fecha real de cobros.
+La Activity serializa navegación, campos y múltiples artículos. Los controles desplazables y calendarios usan estado guardable de Compose. La confirmación de importación local y la copia previa seleccionada se recuperan al recrear la Activity. Los trabajos locales de respaldo continúan sin conservar una Activity fuerte ni reabrir su almacén ya cerrado.
+
+Todos los borradores, confirmaciones y trabajos capturan una generación antes de encolarse. Una restauración cierra editores y selección, y los callbacks antiguos no pueden modificar IDs reutilizados. **Un proceso completamente nuevo cambia el nonce de generación del almacén existente; por seguridad se descartan sus borradores de edición anteriores**, aunque la navegación se serializa. No se promete recuperar un borrador después de forzar detención o borrar datos. Los diálogos de eliminación/Drive deben abrirse de nuevo después de recreación. Verifica el reloj del dispositivo: determina la fecha real de cobros.
 
 ## Evidencia y pruebas de la interfaz
 
-- Se escribieron pruebas Robolectric de pantalla vacía, directorio/búsqueda/deuda, errores de validación sin cerrar formulario, detalle de pedido, borrador con artículos después de recreación, gastos/catálogo, informes y respaldo local. Se usa SDK 28 y una `Application` sin inicializar trabajos de Drive para pruebas de pantalla.
-- `UiWorkflowTest.kt` añade recorridos con controles nativos y SQLite real: alta/edición de cliente y gasto, varios artículos y anticipo HALF, abono excesivo rechazado y abono válido, precio cero rechazado, confirmación de borrado cancelada y selección SAF de exportación. Estas pruebas también quedan pendientes de la ejecución Robolectric coordinada.
-- La primera tentativa de RED no pudo ejecutar Gradle: todavía no existían `tools/env.sh` y el wrapper ejecutable. Después, el agente coordinador reservó Gradle al trabajador DATA por el límite de RAM. Por eso **este trabajador no ejecutó las pruebas Robolectric** ni declara un RED/GREEN de esas pantallas; quedan para la integración del coordinador.
-- Sí se compiló código Kotlin puro real con el compilador 2.1.20 disponible y se ejecutó JUnit 4.13.2, sin Gradle paralelo: validación de periodos, límites de lectura, UTF-8 y archivos de seguridad.
-- Salida inicial real: `OK (8 tests)`.
-- Se agregó una prueba que exige rechazar una copia de seguridad mayor de 16 MB. RED real: `Tests run: 9, Failures: 1`, `Expected exception: java.lang.IllegalArgumentException`.
-- Después de implementar el límite antes de escribir, GREEN real: `Kotlin compiler exit: 0`, `OK (9 tests)`.
-- Las pruebas puras se ejecutaron con límites de memoria de 256 MB para compilar y 128 MB para JUnit. El lanzador temporal quedó en el directorio de scratch del agente; las pruebas permanentes están en `UiPeriodTest.kt` y `UiBackupFilesTest.kt`.
-- Una comprobación adicional con el compilador Kotlin y el `android.jar` real detectó un sombreado de `id` en el selector de categoría; se corrigió con `this.id`. La compilación completa de la UI todavía dependía de que el otro trabajador aportara `DriveController`, ausente en ese momento; no se usó un controlador ficticio para declarar que la aplicación compilaba.
+- Las regresiones UI se migraron de `android.widget`/diálogos nativos a **semántica Compose** y SQLite real: altas y edición, artículos múltiples, HALF, pagos excesivos, validación con borrador conservado, eliminación cancelada, búsqueda, informes y SAF.
+- Se mantienen las verificaciones de generación, recuperación de copias locales y de Drive, y autorización/reset/epoch. El controlador Drive conserva su confirmación nativa por defecto para consumidores antiguos, mientras la app muestra confirmación Material 3.
+- `ComposeAdaptiveTest` verifica las siete secciones, navegación inferior, rail en ventana baja, lista/detalle a 1000 × 600 dp, calendario Material y carga perezosa de un directorio grande.
+- `ComposeRetentionTest` bloquea el almacén con una barrera real y gira durante un guardado; verifica que el resultado llega a la pantalla recreada sin duplicar el editor.
+- `NativeWorkflowInstrumentedTest` usa toque/semántica Compose para cliente, edición, pedido HALF, liquidación, entrega, gasto y recreación de un borrador. `ComposeAdaptiveInstrumentedTest` verifica un ancho real amplio y restaura los ajustes `wm` al terminar. Se ejecutan únicamente sobre un dispositivo de pruebas: generan registros con etiquetas QA.
+- Comando de integración: `source tools/env.sh && ./gradlew assembleDebug assembleDebugAndroidTest testDebugUnitTest lintDebug --no-daemon --max-workers=1`. Los totales y la evidencia final se registran por el coordinador; no se equipara compilar la instrumentación con ejecutarla.
 
-La autorización real de Drive y los proveedores de documentos SAF deben probarse también en un dispositivo/emulador con servicios Google y con la configuración OAuth indicada. No se usaron datos de negocio ficticios para declarar transferencias exitosas.
+La autorización de una cuenta real de Drive y los proveedores SAF también requieren pruebas en un dispositivo con servicios Google y OAuth configurado. No se simulan transferencias exitosas ni se incluye información de demostración en el APK.
