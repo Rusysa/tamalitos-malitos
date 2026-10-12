@@ -22,15 +22,21 @@ Los APK, el ZIP de entrega, las credenciales y los ajustes locales de Android St
 
 Abrir esta carpeta como proyecto en Android Studio. Usar JDK17, SDK Android35 y aceptar las licencias del SDK. Gradle wrapper incluido; no es necesario instalar Gradle global.
 
+En Windows, seleccionar un JDK17 instalado en **File > Settings > Build, Execution, Deployment > Build Tools > Gradle > Gradle JDK** (se puede descargar desde ese selector). Configurar SDK Android35 en SDK Manager y sincronizar el proyecto. Android Studio crea `local.properties` con la ruta del SDK de ese equipo.
+
+Para compilar desde PowerShell, configurar `JAVA_HOME` con la ruta local del JDK17 y ejecutar desde la raíz del proyecto:
+
+    .\gradlew.bat assembleDebug testDebugUnitTest lintDebug --no-daemon --max-workers=1
+
 En Linux, el instalador reproducible de herramientas propias (sin sudo) es:
 
     bash tools/bootstrap.sh
     source tools/env.sh
-    ./gradlew -Dorg.gradle.java.home="$JAVA_HOME" assembleDebug testDebugUnitTest lintDebug --no-daemon --max-workers=1
+    ./gradlew assembleDebug testDebugUnitTest lintDebug --no-daemon --max-workers=1
 
 El instalador descarga JDK17, Gradle8.11.1 y las herramientas oficiales del SDK a ~/.local/share/tamalitos-tools. No modifica el JDK del sistema. local.properties y tools/env.sh son específicos de esta máquina y se ignoran en Git.
 
-El ZIP de código omite el override local `org.gradle.java.home` de gradle.properties para respetar el JDK seleccionado en la otra computadora. La carpeta de trabajo conserva ese ajuste histórico; la opción `-D` anterior permite verificar explícitamente con JDK17 sin modificarlo.
+El repositorio no fija `org.gradle.java.home`: usa el JDK seleccionado en Android Studio o `JAVA_HOME` al compilar desde la terminal. No publicar rutas absolutas de Java o del SDK en la configuración compartida.
 
 APK de desarrollo generado por Gradle:
 

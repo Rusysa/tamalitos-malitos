@@ -8,16 +8,24 @@ Esta versión no está publicada en Play Store. Está firmada con el certificado
 
 ## Con Android Studio
 
-Abrir `/home/rudys/proyectos/App gestion kt` como proyecto. Seleccionar JDK17 en la configuración de Gradle y SDK Android35. `local.properties` contiene la ruta local instalada aquí; en otra computadora Android Studio debe regenerarlo. Las bibliotecas Kotlin/Android están fijadas para que la compilación sea reproducible.
+Abrir la carpeta clonada como proyecto. Seleccionar JDK17 en la configuración de Gradle y SDK Android35. Android Studio genera `local.properties` con la ruta del SDK de cada computadora; ese archivo se ignora en Git. Las bibliotecas Kotlin/Android están fijadas para que la compilación sea reproducible.
 
-En esta máquina las herramientas están instaladas sin permisos de administrador en:
+En Windows:
 
-    /home/rudys/.local/share/tamalitos-tools
+1. En **File > Settings > Build, Execution, Deployment > Build Tools > Gradle**, seleccionar un JDK17 en **Gradle JDK**, o descargarlo desde ese selector.
+2. Instalar SDK Android35 desde SDK Manager y sincronizar el proyecto con Gradle.
+3. Elegir un emulador o teléfono de pruebas y pulsar **Run**.
 
-Comandos desde la raíz del proyecto:
+Para compilar desde PowerShell, configurar `JAVA_HOME` con la ruta local del JDK17 y ejecutar:
+
+    .\gradlew.bat assembleDebug --no-daemon --max-workers=1
+
+Si aparece una ruta Linux en un error de `org.gradle.java.home`, actualizar el repositorio con `git pull`. Si persiste, revisar también `%USERPROFILE%\.gradle\gradle.properties` y quitar o corregir cualquier `org.gradle.java.home` que apunte a otra máquina. La configuración compartida no debe fijar rutas locales de Java.
+
+En Linux, preparar las herramientas con `bash tools/bootstrap.sh` si es necesario. Después, desde la raíz del proyecto:
 
     source tools/env.sh
-    ./gradlew assembleDebug
+    ./gradlew assembleDebug --no-daemon --max-workers=1
     adb install -r app/build/outputs/apk/debug/app-debug.apk
 
 ## Google Drive: datos públicos de esta compilación
