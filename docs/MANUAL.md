@@ -11,7 +11,19 @@
 
 El resumen muestra ventas registradas, dinero efectivamente cobrado, gastos, saldo por cobrar y flujo de efectivo **de todo el historial**. También permite crear un pedido, registrar un gasto o agregar un cliente y consultar las próximas cinco entregas pendientes.
 
-La interfaz usa **Jetpack Compose y Material 3**, con colores verde/crema/terracota, modo oscuro y colores dinámicos de Android 12 o posterior.
+**Agenda de entregas** cuenta los pedidos pendientes o en preparación para hoy y los vencidos (fecha anterior a hoy). Sus botones abren Pedidos con el filtro correspondiente y limpian búsquedas previas. **Existencias bajas** avisa cuando hay productos activos con 5 unidades disponibles o menos, muestra hasta cinco y permite abrir el catálogo. Los productos sin control de stock no generan avisos. Son avisos dentro de Inicio; no se programan notificaciones del sistema.
+
+La barra de estado/notificaciones usa el comportamiento predeterminado de Android, sin el color verde personalizado.
+
+La interfaz usa **Jetpack Compose y Material 3**, con tarjetas con iconos, etiquetas de estado y una paleta verde/crema/terracota que se adapta a claro y oscuro. La paleta propia se mantiene también en Android 12 o posterior.
+
+### Apariencia y gráficos
+
+El icono de paleta en la esquina superior derecha abre **Apariencia**. Elige **Modo claro**, **Modo oscuro** o **Seguir el sistema** (predeterminado). El cambio es inmediato y se conserva al cerrar y volver a abrir la app. La preferencia es local al dispositivo y no forma parte del respaldo del negocio. La barra inferior del sistema acompaña al tema; la barra de notificaciones continúa sin color personalizado.
+
+En Inicio, **El negocio en gráficos** compara ventas, cobros y gastos de todo el historial y muestra la cantidad de pedidos por estado con un gráfico circular. Los cancelados aparecen en el conteo de estados, pero no suman a ventas ni deuda.
+
+En Informes, los gráficos respetan el periodo aplicado. Los estados se agrupan por fecha de entrega; cobros y gastos mantienen sus fechas reales. **Distribución de gastos** muestra las cinco categorías de mayor importe y agrupa las restantes en **Otras categorías**. La lista completa por categoría permanece debajo. Las barras comparten escala dentro de cada gráfico y sus importes exactos se muestran en texto. Si no hay datos, aparece un estado vacío sin cifras inventadas.
 
 - En teléfono (ancho disponible menor de 600 dp), la barra inferior muestra **Inicio, Clientes, Pedidos y Más**. **Más** abre Gastos, Informes, Productos y Respaldo.
 - Desde 600 dp aparece una **barra lateral** con las siete secciones; se puede desplazar en ventanas bajas.
@@ -27,6 +39,14 @@ La interfaz usa **Jetpack Compose y Material 3**, con colores verde/crema/terrac
 4. **Nuevo pedido para este cliente** lo selecciona directamente en el formulario.
 5. **Editar cliente** cambia sus datos sin borrar el historial.
 6. **Eliminar cliente** pide confirmación. Solo se permite si no tiene ningún pedido, incluso si sus pedidos están cancelados. Esto protege los vínculos contables.
+
+Si hay teléfono, **Marcar al cliente** abre el marcador para que confirmes la llamada. Si hay dirección, **Abrir dirección en mapas** abre una aplicación de mapas. No se solicitan permisos de llamadas ni ubicación. Si falta una aplicación compatible, aparece un aviso.
+
+## Buscar y organizar pedidos
+
+En **Pedidos** puedes combinar búsqueda por cliente, número, dirección o notas con el estado, **Entregas** y **Cobro**. Las opciones de hoy, mañana y vencidas incluyen solo pedidos pendientes o en preparación. **Solo con saldo pendiente** incluye entregados sin liquidar y excluye cancelados. Los filtros se combinan: si no hay coincidencias, usa **Restablecer filtros**.
+
+**Ordenar pedidos** permite ver los más recientes, la fecha de entrega ascendente o el mayor saldo primero. Se muestra la cantidad de resultados. La selección de filtros se conserva al girar o recrear la pantalla.
 
 ## Crear pedidos
 
@@ -49,6 +69,8 @@ Los artículos de catálogo con stock controlado reservan/descuentan existencias
 ## Detalle, abonos y entrega
 
 **Ver pedido** muestra cliente, fecha y lugar, notas, estado, artículos, total, cobrado y saldo. El historial de pagos incluye anticipos y abonos con la fecha/hora reales de registro y su nota.
+
+**Abrir entrega en mapas** usa la dirección del pedido. **Compartir resumen del pedido** abre el selector de Android para que elijas la aplicación y el destinatario. Incluye cliente, estado, fecha, lugar, artículos y cantidades pagadas/pendientes; omite notas internas y referencias de pago. No envía nada automáticamente. Para un pedido cancelado indica que no hay saldo exigible.
 
 - **Registrar abono** acepta un importe mayor que cero y no mayor que el saldo. La nota/referencia es opcional. El pago se registra con la fecha y hora actuales del dispositivo. No hay una función de deshacer o editar pagos.
 - **Cambiar estado** permite Pendiente, En preparación o Entregado. Entregar no implica que el cliente ya pagó todo; el saldo se conserva.

@@ -14,6 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Brush
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 private data class Destination(val label: String, val icon: ImageVector)
@@ -25,6 +27,7 @@ internal val LocalActionGuard = staticCompositionLocalOf<((() -> Unit) -> Unit)>
 @Composable internal fun TamalitosApp(a: MainActivity) {
     val state by a.model.state.collectAsStateWithLifecycle()
     var more by rememberSaveable { mutableStateOf(false) }
+    var appearanceOpen by rememberSaveable { mutableStateOf(false) }
     val snackbar = remember { SnackbarHostState() }
     LaunchedEffect(a.notice) { if(a.notice.isNotBlank()) { snackbar.showSnackbar(a.notice); a.notice = "" } }
     // A generation belongs to the displayed records, not a newly restored record sharing its ID.
@@ -38,7 +41,9 @@ internal val LocalActionGuard = staticCompositionLocalOf<((() -> Unit) -> Unit)>
                     destinations.forEach { item -> NavigationRailItem(selected = a.screen == item.label, onClick = { a.navigate(item.label) }, icon = { Icon(item.icon, null) }, label = { Text(item.label) }) }
                 }
                 Scaffold(Modifier.weight(1f), topBar = {
-                    TopAppBar(title = { Column { Text("Tamalitos Malitos", style = MaterialTheme.typography.titleLarge); Text(a.screen, style = MaterialTheme.typography.labelMedium) } })
+                    TopAppBar(title = { Column { Text("Tamalitos Malitos", style = MaterialTheme.typography.titleLarge); Text(a.screen, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant) } },
+                        actions = { IconButton({ appearanceOpen = true }) { Icon(Icons.Default.Palette, contentDescription = "Cambiar apariencia") } },
+                        colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background))
                 }, snackbarHost = { SnackbarHost(snackbar) }, bottomBar = {
                     if(compact) NavigationBar(Modifier.testTag("navigation-bottom")) {
                         destinations.take(3).forEach { item -> NavigationBarItem(a.screen == item.label, { a.navigate(item.label) }, { Icon(item.icon, null) }, label = { Text(item.label) }) }
@@ -72,6 +77,7 @@ internal val LocalActionGuard = staticCompositionLocalOf<((() -> Unit) -> Unit)>
             }
         }
         Editor(a, state)
+        if (appearanceOpen) AppearanceDialog(a.appearance, a::setAppearanceMode) { appearanceOpen = false }
         a.confirmation?.let { confirmation -> AlertDialog(onDismissRequest = a::cancelConfirmation,
             title = { Text(confirmation.title) }, text = { Text(confirmation.detail) },
             confirmButton = { TextButton({ a.acceptConfirmation(confirmation) }, Modifier.testTag("confirm-action")) { Text(confirmation.label) } },
@@ -84,11 +90,30 @@ internal val LocalActionGuard = staticCompositionLocalOf<((() -> Unit) -> Unit)>
 }
 @Composable private fun Dashboard(a: MainActivity, state: BusinessUiState) {
     Page {
-        Heading("Resumen del negocio", "Sin conexión · MXN · Datos en este dispositivo")
+        DashboardWelcome()
         Summary(state.report)
         androidx.compose.foundation.layout.FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             Action("Nuevo pedido", true) { a.orderForm() }; Action("Registrar gasto") { a.expenseForm() }; Action("Agregar cliente") { a.customerForm() }
         }
+        Heading("Agenda de entregas")
+        val today = java.time.LocalDate.now()
+        val dueToday = filterOrders(state.orders, delivery = DeliveryFilter.TODAY, today = today).size
+        val overdue = filterOrders(state.orders, delivery = DeliveryFilter.OVERDUE, today = today).size
+        InfoCard {
+            Text("$dueToday por entregar hoy · $overdue entregas vencidas")
+            Text("Solo pedidos pendientes o en preparación. Una entrega vencida tiene fecha anterior a hoy.")
+            Action("Ver entregas de hoy") { a.showDeliveryAgenda(DeliveryFilter.TODAY) }
+            Action("Ver entregas vencidas") { a.showDeliveryAgenda(DeliveryFilter.OVERDUE) }
+        }
+        val lowStock = state.products.filter { it.active && it.stock != null && it.stock <= 5 }.sortedBy { it.stock }
+        if (lowStock.isNotEmpty()) InfoCard {
+            Text("Existencias bajas: ${lowStock.size} productos", style = MaterialTheme.typography.titleMedium)
+            Text("Productos activos con 5 unidades disponibles o menos.")
+            lowStock.take(5).forEach { Text("${it.name}: ${it.stock} disponibles") }
+            Action("Revisar existencias") { a.navigate("Productos") }
+        }
+        Heading("El negocio en gráficos", "Todo el historial · Importes en MXN")
+        BusinessCharts(state.report, state.orders)
         Heading("Próximas entregas")
         val upcoming = state.orders.filter { it.status in listOf(OrderStatus.PENDING, OrderStatus.PREPARING) }.sortedBy { it.deliveryDate }.take(5)
         if(upcoming.isEmpty()) Empty("No hay entregas pendientes", "Agrega un cliente y crea tu primer pedido.")
@@ -96,13 +121,48 @@ internal val LocalActionGuard = staticCompositionLocalOf<((() -> Unit) -> Unit)>
         Action("Ver informes por periodo") { a.navigate("Informes") }
     }
 }
-@OptIn(ExperimentalLayoutApi::class)
+internal fun MainActivity.showDeliveryAgenda(filter: DeliveryFilter) {
+    orderQuery = ""; orderFilter = 0
+    model.session.deliveryFilter = filter; model.session.owingOnly = false
+    model.session.orderSort = OrderSort.DELIVERY
+    navigate("Pedidos")
+}
 @Composable internal fun Summary(report: Report, period: Boolean = false) {
-    FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        listOf((if(period) "Ventas por fecha de entrega" else "Ventas registradas") to report.salesCents,
-            (if(period) "Cobros por fecha real de pago" else "Dinero cobrado") to report.collectedCents,
-            "Gastos del periodo" to report.expensesCents, (if(period) "Saldo por cobrar de esos pedidos" else "Saldo por cobrar") to report.receivablesCents,
-            "Flujo de efectivo (cobros − gastos)" to report.cashFlowCents).forEach { (label, cents) -> Metric(label, cents, Modifier.widthIn(min = 230.dp, max = 330.dp)) }
+    val metrics = listOf((if(period) "Ventas por fecha de entrega" else "Ventas registradas") to report.salesCents,
+        (if(period) "Cobros por fecha real de pago" else "Dinero cobrado") to report.collectedCents,
+        "Gastos del periodo" to report.expensesCents, (if(period) "Saldo por cobrar de esos pedidos" else "Saldo por cobrar") to report.receivablesCents,
+        "Flujo de efectivo (cobros − gastos)" to report.cashFlowCents)
+    val icons = listOf(Icons.Default.ShoppingBag, Icons.Default.Payments, Icons.AutoMirrored.Filled.ReceiptLong, Icons.Default.AccountBalanceWallet, Icons.Default.BarChart)
+    val colors = MaterialTheme.colorScheme
+    val accents = listOf(colors.tertiary, colors.primary, colors.secondary, colors.secondary,
+        if (report.cashFlowCents < 0) colors.error else colors.primary)
+    BoxWithConstraints(Modifier.fillMaxWidth()) {
+        val fontScale = androidx.compose.ui.platform.LocalDensity.current.fontScale
+        val columns = if (maxWidth >= 900.dp) 3 else if (maxWidth >= 360.dp && fontScale <= 1.3f) 2 else 1
+        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            metrics.indices.toList().chunked(columns).forEach { indices ->
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    indices.forEach { index -> Metric(metrics[index].first, metrics[index].second, Modifier.weight(1f), icons[index], accents[index]) }
+                    repeat(columns - indices.size) { Spacer(Modifier.weight(1f)) }
+                }
+            }
+        }
     }
     Text("${report.pendingOrders} pedidos pendientes · ${report.deliveredOrders} entregados")
+}
+
+@Composable private fun DashboardWelcome() {
+    val colors = MaterialTheme.colorScheme
+    Surface(shape = MaterialTheme.shapes.large, color = colors.primaryContainer) {
+        Column(Modifier.fillMaxWidth().background(Brush.linearGradient(listOf(colors.primaryContainer, colors.surfaceContainer)))
+            .padding(24.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Icon(Icons.Default.Storefront, null, tint = colors.onPrimaryContainer)
+                Text("TU NEGOCIO, AL DÍA", style = MaterialTheme.typography.labelLarge, color = colors.onPrimaryContainer)
+            }
+            Text("Resumen del negocio", style = MaterialTheme.typography.headlineMedium, color = colors.onPrimaryContainer)
+            Text("Cada pedido cuenta. Aquí tienes el pulso de tus ventas y entregas.", color = colors.onPrimaryContainer)
+            Text("Sin conexión · MXN · Datos en este dispositivo", style = MaterialTheme.typography.bodySmall, color = colors.onPrimaryContainer)
+        }
+    }
 }

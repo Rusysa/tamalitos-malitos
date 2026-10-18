@@ -31,6 +31,8 @@ import androidx.compose.runtime.Composable
         Heading(customer.name, "Datos de contacto, pedidos y cuenta")
         Action("Volver al directorio") { a.navigate("Clientes") }
         InfoCard { Text("Teléfono: ${customer.phone.ifBlank { "Sin registrar" }}"); Text("Dirección: ${customer.address.ifBlank { "Sin registrar" }}"); Text(customer.notes) }
+        if (customer.phone.isNotBlank()) Action("Marcar al cliente") { a.dialCustomer(customer.phone) }
+        if (customer.address.isNotBlank()) Action("Abrir dirección en mapas") { a.openAddress(customer.address) }
         val orders = state.orders.filter { it.customerId == customer.id }
         Metric("Saldo por cobrar", orders.filter { it.status != OrderStatus.CANCELLED }.fold(0L) { sum, order -> Math.addExact(sum, order.balanceCents) })
         Text("${orders.size} pedidos registrados")

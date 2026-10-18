@@ -50,6 +50,12 @@ import java.time.LocalDate
             Text("La deuda es el saldo actual, no una reconstrucción histórica. Los cancelados no cuentan como ventas ni deuda. El flujo de efectivo no representa utilidad contable.")
         }
         val expenses = state.expenses.filter { (a.reportFrom.isBlank() || it.date >= a.reportFrom) && (a.reportTo.isBlank() || it.date <= a.reportTo) }
+        if (!state.busy) {
+            val periodOrders = state.orders.filter { (a.reportFrom.isBlank() || it.deliveryDate >= a.reportFrom) && (a.reportTo.isBlank() || it.deliveryDate <= a.reportTo) }
+            Heading("Vista gráfica del periodo", "Importes en MXN · Pedidos por fecha de entrega")
+            BusinessCharts(state.periodReport, periodOrders)
+            ExpenseCategoryChart(expenses)
+        }
         Heading("Gastos por categoría")
         if(expenses.isEmpty()) Empty("Sin gastos en este periodo", "Los gastos se agrupan por categoría.")
         expenses.groupBy { it.category }.toSortedMap().forEach { (category, rows) -> Metric(category, rows.fold(0L) { sum, expense -> Math.addExact(sum, expense.amountCents) }) }

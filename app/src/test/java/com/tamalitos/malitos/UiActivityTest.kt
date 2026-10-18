@@ -64,4 +64,41 @@ internal class UiActivityTest : ComposeUiHarness() {
         compose.onNodeWithText("Exportar respaldo local").assertExists(); compose.onNodeWithText("Importar respaldo local").assertExists()
         assertFalse(DriveController.isConnected(activity))
     }
+
+    @Test fun orderFiltersSurviveRecreationAndResetTogether() {
+        launch()
+        compose.runOnIdle {
+            activity.orderQuery = "Ana"; activity.orderFilter = 2
+            activity.model.session.deliveryFilter = DeliveryFilter.TOMORROW
+            activity.model.session.owingOnly = true
+            activity.model.session.orderSort = OrderSort.BALANCE
+        }
+        navigate("Pedidos"); rotate()
+        assertEquals("Ana", activity.orderQuery)
+        assertEquals(2, activity.orderFilter)
+        assertEquals(DeliveryFilter.TOMORROW, activity.model.session.deliveryFilter)
+        assertTrue(activity.model.session.owingOnly)
+        assertEquals(OrderSort.BALANCE, activity.model.session.orderSort)
+        click("Restablecer filtros")
+        assertEquals("", activity.orderQuery)
+        assertEquals(0, activity.orderFilter)
+        assertEquals(DeliveryFilter.ALL, activity.model.session.deliveryFilter)
+        assertFalse(activity.model.session.owingOnly)
+        assertEquals(OrderSort.RECENT, activity.model.session.orderSort)
+    }
+
+    @Test fun dashboardAgendaClearsConflictingFilters() {
+        launch()
+        compose.runOnIdle {
+            activity.orderQuery = "No coincide"; activity.orderFilter = 4
+            activity.model.session.owingOnly = true
+        }
+        click("Ver entregas de hoy"); settled()
+        assertEquals("Pedidos", activity.screen)
+        assertEquals("", activity.orderQuery)
+        assertEquals(0, activity.orderFilter)
+        assertEquals(DeliveryFilter.TODAY, activity.model.session.deliveryFilter)
+        assertFalse(activity.model.session.owingOnly)
+        assertEquals(OrderSort.DELIVERY, activity.model.session.orderSort)
+    }
 }

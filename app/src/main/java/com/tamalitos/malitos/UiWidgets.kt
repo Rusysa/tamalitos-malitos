@@ -15,6 +15,11 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Payments
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 
 internal fun Bundle.string(key: String, fallback: String = "") = getString(key) ?: fallback
 internal fun centsInput(cents: Long) = java.math.BigDecimal.valueOf(cents, 2).toPlainString()
@@ -27,16 +32,28 @@ internal fun centsInput(cents: Long) = java.math.BigDecimal.valueOf(cents, 2).to
     if (subtitle.isNotBlank()) Text(subtitle, style = MaterialTheme.typography.bodyMedium)
 }
 @Composable internal fun InfoCard(content: @Composable ColumnScope.() -> Unit) {
-    Card(Modifier.fillMaxWidth()) { Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp), content = content) }
+    Card(Modifier.fillMaxWidth(), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = .65f))) {
+        Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp), content = content)
+    }
 }
 @Composable internal fun Action(label: String, primary: Boolean = false, enabled: Boolean = true, action: () -> Unit) {
     val guard = LocalActionGuard.current
     if(primary) Button(onClick = { guard(action) }, enabled = enabled, modifier = Modifier.heightIn(min = 48.dp)) { Text(label) }
     else OutlinedButton(onClick = { guard(action) }, enabled = enabled, modifier = Modifier.heightIn(min = 48.dp)) { Text(label) }
 }
-@Composable internal fun Metric(label: String, cents: Long, modifier: Modifier = Modifier) {
-    Card(modifier) { Column(Modifier.padding(16.dp)) { Text(label, style = MaterialTheme.typography.labelLarge)
-        Text(Money.format(cents), style = MaterialTheme.typography.headlineSmall, color = MaterialTheme.colorScheme.primary) } }
+@Composable internal fun Metric(label: String, cents: Long, modifier: Modifier = Modifier,
+    icon: ImageVector = Icons.Default.Payments, accent: Color = MaterialTheme.colorScheme.primary) {
+    Card(modifier, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = .65f))) {
+        Column(Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Icon(icon, null, Modifier.size(20.dp), tint = accent)
+                Text(label, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+            Text(Money.format(cents), style = MaterialTheme.typography.headlineSmall, color = accent)
+        }
+    }
 }
 @Composable internal fun Empty(title: String, detail: String) { InfoCard { Text(title, style = MaterialTheme.typography.titleMedium); Text(detail) } }
 @Composable internal fun Input(label: String, value: String, tag: String = label, numeric: Boolean = false, multiline: Boolean = false, changed: (String) -> Unit) {
@@ -139,7 +156,9 @@ internal fun MainActivity.saveEditor(expectedGeneration: Long = draftGeneration)
             navigate(destination, selection)
             message("Registro guardado.")
         }
-    }, { draftError = it })
+    }, { failure ->
+        if (draftKind != null && identity == editorIdentity) draftError = failure
+    })
 }
 @Suppress("DEPRECATION") internal fun Bundle.items(): List<Bundle> = getParcelableArrayList<Bundle>("items").orEmpty()
 internal fun MainActivity.orderStatusConfirmation(orderId: Long, status: OrderStatus) = openEditor("status", orderId, Bundle().apply { putString("status", listOf(OrderStatus.PENDING, OrderStatus.PREPARING, OrderStatus.DELIVERED).indexOf(status).coerceAtLeast(0).toString()) })

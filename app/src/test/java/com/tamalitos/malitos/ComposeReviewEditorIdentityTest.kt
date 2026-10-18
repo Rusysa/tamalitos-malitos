@@ -76,4 +76,12 @@ internal class ComposeReviewEditorIdentityTest : ComposeUiHarness() {
         assertNewEditorUnchanged()
         assertEquals("Saved editor A", activity.store.customers().single().name)
     }
+
+    @Test fun queuedSaveFailureDoesNotAssignErrorToReopenedEditor() {
+        launchControlled(); queueCustomerSave("   ")
+        replaceWithUnsavedEditor()
+        io.drain(); synchronizeCompose()
+        assertNewEditorUnchanged()
+        assertTrue(activity.store.customers().isEmpty())
+    }
 }

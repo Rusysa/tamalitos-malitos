@@ -17,19 +17,52 @@ import java.time.format.DateTimeFormatter
 @Composable internal fun OrderRow(a: MainActivity, order: Order) {
     InfoCard {
         Text("Pedido #${order.id} · ${order.customerName}", style = MaterialTheme.typography.titleMedium)
-        Text("${a.dateLabel(order.deliveryDate)} · ${a.statusLabel(order.status)}")
+        OrderStatusBadge(a.statusLabel(order.status), order.status)
+        Text("Entrega: ${a.dateLabel(order.deliveryDate)}", color = MaterialTheme.colorScheme.onSurfaceVariant)
         Text("Total ${Money.format(order.totalCents)} · Saldo ${Money.format(order.balanceCents)}")
         Action("Ver pedido #${order.id}") { a.navigate("Pedidos", order.id) }
     }
 }
+@Composable private fun OrderStatusBadge(label: String, status: OrderStatus) {
+    val colors = MaterialTheme.colorScheme
+    val background = when (status) {
+        OrderStatus.PENDING -> colors.tertiaryContainer
+        OrderStatus.PREPARING -> colors.secondaryContainer
+        OrderStatus.DELIVERED -> colors.primaryContainer
+        OrderStatus.CANCELLED -> colors.surfaceContainerHighest
+    }
+    val foreground = when (status) {
+        OrderStatus.PENDING -> colors.onTertiaryContainer
+        OrderStatus.PREPARING -> colors.onSecondaryContainer
+        OrderStatus.DELIVERED -> colors.onPrimaryContainer
+        OrderStatus.CANCELLED -> colors.onSurfaceVariant
+    }
+    Surface(color = background, contentColor = foreground, shape = MaterialTheme.shapes.small) {
+        Text(label, Modifier.padding(horizontal = 12.dp, vertical = 6.dp), style = MaterialTheme.typography.labelMedium)
+    }
+}
 @Composable internal fun Orders(a: MainActivity, state: BusinessUiState) {
     val statuses = listOf(null, OrderStatus.PENDING, OrderStatus.PREPARING, OrderStatus.DELIVERED, OrderStatus.CANCELLED)
-    val rows = state.orders.filter { (a.orderFilter == 0 || it.status == statuses[a.orderFilter.coerceIn(0, 4)]) && listOf(it.id.toString(), it.customerName, it.deliveryAddress, it.notes).any { text -> text.contains(a.orderQuery.trim(), true) } }.sortedByDescending { it.id }
+    val session = a.model.session
+    val rows = filterOrders(state.orders, a.orderQuery, statuses[a.orderFilter.coerceIn(0, 4)],
+        session.deliveryFilter, session.owingOnly, session.orderSort)
     LazyColumn(Modifier.fillMaxSize().testTag("order-list"), contentPadding = PaddingValues(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         item { Heading("Pedidos", "Entregas, anticipos y abonos") }
         item { Action("Nuevo pedido", true) { a.orderForm() } }
         item { Input("Buscar pedido por cliente o referencia", a.orderQuery) { a.orderQuery = it } }
         item { Choice("Estado del pedido", listOf("Todos", "Pendiente", "En preparación", "Entregado", "Cancelado"), a.orderFilter) { a.orderFilter = it } }
+        item { Choice("Entregas", DeliveryFilter.entries.map { it.label }, session.deliveryFilter.ordinal) { session.deliveryFilter = DeliveryFilter.entries[it] } }
+        item { Choice("Cobro", listOf("Todos los saldos", "Solo con saldo pendiente"), if (session.owingOnly) 1 else 0) { session.owingOnly = it == 1 } }
+        item { Choice("Ordenar pedidos", OrderSort.entries.map { it.label }, session.orderSort.ordinal) { session.orderSort = OrderSort.entries[it] } }
+        item {
+            Text("${rows.size} pedidos encontrados")
+            if (a.orderQuery.isNotBlank() || a.orderFilter != 0 || session.deliveryFilter != DeliveryFilter.ALL || session.owingOnly || session.orderSort != OrderSort.RECENT) {
+                Action("Restablecer filtros") {
+                    a.orderQuery = ""; a.orderFilter = 0; session.deliveryFilter = DeliveryFilter.ALL
+                    session.owingOnly = false; session.orderSort = OrderSort.RECENT
+                }
+            }
+        }
         if(rows.isEmpty()) item { Empty("No hay pedidos para esta búsqueda", "Crea un pedido o cambia los filtros.") }
         items(rows, key = { it.id }) { OrderRow(a, it) }
     }
@@ -42,6 +75,8 @@ import java.time.format.DateTimeFormatter
         Action("Volver a pedidos") { a.navigate("Pedidos") }
         Action("Ver cuenta de ${order.customerName}") { a.navigate("Clientes", order.customerId) }
         InfoCard { Text(a.statusLabel(order.status)); Text("Entrega: ${a.dateLabel(order.deliveryDate)}"); Text("Dirección / encuentro: ${order.deliveryAddress}"); Text(order.notes) }
+        if (order.deliveryAddress.isNotBlank()) Action("Abrir entrega en mapas") { a.openAddress(order.deliveryAddress) }
+        Action("Compartir resumen del pedido") { a.shareOrder(order) }
         Metric("Total del pedido", order.totalCents); Metric("Cobrado", order.paidCents); Metric("Saldo pendiente", order.balanceCents)
         Text(if(order.status == OrderStatus.CANCELLED) "Pedido cancelado: no suma a ventas ni deuda." else if(order.balanceCents == 0L) "Pagado" else if(order.paidCents == 0L) "Sin pagar" else "Pago parcial")
         Heading("Artículos")

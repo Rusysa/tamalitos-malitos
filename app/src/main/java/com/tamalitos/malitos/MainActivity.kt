@@ -7,12 +7,14 @@ import androidx.activity.compose.setContent
 import androidx.activity.OnBackPressedCallback
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModelProvider
+import androidx.compose.ui.graphics.toArgb
 import java.time.LocalDate
 
 internal data class UiConfirmation(val title: String, val detail: String, val label: String, val generation: Long,
     val action: () -> Unit, val cancel: () -> Unit = {})
 
 class MainActivity : ComponentActivity() {
+    internal var appearance by mutableStateOf(AppearanceMode.SYSTEM)
     internal lateinit var store: BusinessStore
     internal lateinit var drive: DriveController
     internal lateinit var model: BusinessViewModel
@@ -86,6 +88,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        appearance = AppearancePreferences.read(this)
         store = BusinessStore(applicationContext)
         model = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(application))[BusinessViewModel::class.java]
         UiBackupJobs.attach(this)
@@ -96,6 +99,9 @@ class MainActivity : ComponentActivity() {
             screen = saved.getString("screen", "Inicio"); selectedId = saved.getLong("selectedId")
             customerQuery = saved.getString("customerQuery", ""); orderQuery = saved.getString("orderQuery", "")
             orderFilter = saved.getInt("orderFilter"); reportFrom = saved.getString("reportFrom", reportFrom)
+            model.session.deliveryFilter = DeliveryFilter.entries.firstOrNull { it.name == saved.getString("deliveryFilter") } ?: DeliveryFilter.ALL
+            model.session.owingOnly = saved.getBoolean("owingOnly")
+            model.session.orderSort = OrderSort.entries.firstOrNull { it.name == saved.getString("orderSort") } ?: OrderSort.RECENT
             reportTo = saved.getString("reportTo", reportTo); expenseFrom = saved.getString("expenseFrom", ""); expenseTo = saved.getString("expenseTo", "")
             draftGeneration = saved.getLong("draftGeneration", Long.MIN_VALUE)
             draftKind = saved.getString("draftKind"); draftId = saved.getLong("draftId"); draft = saved.getBundle("draft") ?: Bundle()
@@ -118,13 +124,32 @@ class MainActivity : ComponentActivity() {
                     else -> { isEnabled = false; onBackPressedDispatcher.onBackPressed(); isEnabled = true } }
             }
         })
-        setContent { TamalitosTheme { TamalitosApp(this) } }
+        setContent {
+            val dark = when (appearance) {
+                AppearanceMode.SYSTEM -> androidx.compose.foundation.isSystemInDarkTheme()
+                AppearanceMode.LIGHT -> false
+                AppearanceMode.DARK -> true
+            }
+            TamalitosTheme(dark = dark) {
+                val navigationColor = androidx.compose.material3.MaterialTheme.colorScheme.surface.toArgb()
+                SideEffect {
+                    // Only the bottom system navigation bar follows the appearance.
+                    // Leave the notification/status bar under the platform theme's control.
+                    window.navigationBarColor = navigationColor
+                    androidx.core.view.WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = !dark
+                }
+                TamalitosApp(this)
+            }
+        }
         render()
         pendingImportUri?.let { confirmLocalImport(android.net.Uri.parse(it), pendingImportGeneration) }
     }
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putString("screen", screen); outState.putLong("selectedId", selectedId)
         outState.putString("customerQuery", customerQuery); outState.putString("orderQuery", orderQuery); outState.putInt("orderFilter", orderFilter)
+        outState.putString("deliveryFilter", model.session.deliveryFilter.name)
+        outState.putBoolean("owingOnly", model.session.owingOnly)
+        outState.putString("orderSort", model.session.orderSort.name)
         outState.putString("reportFrom", reportFrom); outState.putString("reportTo", reportTo)
         outState.putString("expenseFrom", expenseFrom); outState.putString("expenseTo", expenseTo)
         outState.putString("draftKind", draftKind); outState.putLong("draftId", draftId); outState.putBundle("draft", Bundle(draft))
@@ -152,6 +177,10 @@ class MainActivity : ComponentActivity() {
         pendingImportUri = null; pendingSafetyPath = null; selectedId = 0; screen = "Inicio"; render()
     }
     internal fun message(value: String) { notice = value }
+    internal fun setAppearanceMode(mode: AppearanceMode) {
+        AppearancePreferences.write(this, mode)
+        appearance = mode
+    }
     internal fun error(value: String) { problem = value }
     internal fun guarded(action: () -> Unit) { try { action() } catch(e: Exception) { error(e.message ?: "No se pudo completar la operación.") } }
     internal fun confirm(heading: String, detail: String, label: String, action: () -> Unit) = confirm(heading, detail, label, {}, action)

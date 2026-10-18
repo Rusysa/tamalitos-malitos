@@ -4,7 +4,7 @@ Aplicación Android en Kotlin con Jetpack Compose y Material Design 3 para clien
 
 ## Estado del proyecto
 
-Rediseño 1.1.0 para publicación como versión de desarrollo, no como versión certificada para producción. Las pruebas JVM más recientes registran 125 casos en 29 suites, sin fallos, errores ni omitidas. Hay evidencia de seis pruebas instrumentadas API27, respaldo SAF real y guardado mediante toque Android con el teclado abierto. Lint: cero errores y 29 advertencias. Se corrigieron la admisión de escrituras, el orden de lecturas, la selección SAF, la búsqueda, el refresh tras escritura fallida y el cierre de otro editor desde un guardado anterior. Sigue pendiente proteger el callback de error del guardado: puede asignar a un formulario nuevo el error de otro formulario ya cerrado. Las pruebas verdes no equivalen a una aprobación independiente final de todo el rediseño. Google Drive requiere configuración de Google Cloud y pruebas con una cuenta real.
+Rediseño 1.1.0 para publicación como versión de desarrollo, no como versión certificada para producción. Las pruebas JVM más recientes registran 125 casos en 29 suites, sin fallos, errores ni omitidas. Hay evidencia de seis pruebas instrumentadas API27, respaldo SAF real y guardado mediante toque Android con el teclado abierto. Lint: cero errores y 29 advertencias. Se corrigieron la admisión de escrituras, el orden de lecturas, la selección SAF, la búsqueda, el refresh tras escritura fallida y el cierre de otro editor desde un guardado anterior. El callback de error del guardado ahora protege la identidad del formulario; esta corrección y las nuevas mejoras operativas están pendientes de pruebas en Android Studio (ver docs/PRUEBAS-MEJORAS.md). Las pruebas verdes no equivalen a una aprobación independiente final de todo el rediseño. Google Drive requiere configuración de Google Cloud y pruebas con una cuenta real.
 
 ## Interfaz adaptable
 
@@ -13,7 +13,7 @@ Rediseño 1.1.0 para publicación como versión de desarrollo, no como versión 
 - Desde 600dp de ancho disponible: navegación lateral desplazable.
 - Desde 840dp: directorio/ficha de cliente y lista/detalle de pedido simultáneos.
 - Formularios con ancho limitado, desplazamiento, calendario Material y ajuste a teclado y poca altura.
-- Tema claro/oscuro y colores dinámicos en Android12+; se conservan SQLite, centavos MXN y el formato de respaldos.
+- Selector claro/oscuro/sistema con preferencia persistente, paleta propia, tarjetas con iconos y gráficos nativos de importes, estados y gastos; se conservan SQLite, centavos MXN y el formato de respaldos. Estos cambios están pendientes de pruebas en Android Studio; ver docs/PRUEBAS-MEJORAS.md.
 - La rotación conserva navegación y borradores. Un inicio de proceso nuevo descarta referencias/borradores de una generación anterior por seguridad.
 
 Los APK, el ZIP de entrega, las credenciales y los ajustes locales de Android Studio no se incluyen en Git. Después de clonar, configurar el SDK local y JDK17 en Android Studio.
